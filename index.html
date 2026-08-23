@@ -7,7 +7,7 @@
 <meta content="VELUM Coder — modelo local 8B / ~1B ativo, pós-treinado com foco extremo em código e disponível quantizado no Hugging Face." data-i18n-content="meta_description" name="description"/>
 <meta content="#050b14" name="theme-color"/>
 <title>VELUM Coder — Local. Quantized. Code-first.</title>
-<link href="./velum-release-v4.css?v=4" rel="stylesheet"/>
+<link href="./velum-release-v6.css?v=6" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="noise"></div>
@@ -256,7 +256,65 @@ Evite explicações quando o usuário pedir somente código.</pre>
     </div>
   </div>
 
+  
   <div class="inference-card reveal" style="margin-top:22px">
+    <h3>Structured Output</h3>
+    <p style="color:#8fa6ba;font-size:12px;line-height:1.75;margin:0 0 16px">
+      Se o seu runtime suporta <strong>JSON Schema / structured output</strong>, você pode travar a resposta em um formato previsível.
+      Isso ajuda bastante quando o VELUM é usado em pipelines, agentes, IDEs ou geração automática de arquivos.
+    </p>
+
+    <div class="structured-grid">
+      <div>
+        <span class="structured-label">JSON SCHEMA</span>
+        <div class="codebox structured-codebox">
+          <button class="copy-btn" data-copy-target="structured-schema">COPIAR</button>
+          <pre id="structured-schema">{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "markdown_full": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "language",
+    "code",
+    "markdown_full"
+  ],
+  "additionalProperties": false
+}</pre>
+        </div>
+      </div>
+
+      <div class="structured-notes">
+        <div class="structured-note">
+          <strong>language</strong>
+          <p>Linguagem principal do artefato gerado, por exemplo <code>html</code>, <code>javascript</code>, <code>python</code>.</p>
+        </div>
+        <div class="structured-note">
+          <strong>code</strong>
+          <p>Código puro, pronto para salvar em arquivo ou encaminhar para outra etapa do pipeline.</p>
+        </div>
+        <div class="structured-note">
+          <strong>markdown_full</strong>
+          <p>Resposta completa em Markdown quando você quiser preservar contexto, explicação ou documentação junto do código.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-strip" style="margin-bottom:0">
+      <strong>RECOMENDAÇÃO:</strong> structured output não substitui um bom prompt. Continue dizendo explicitamente o que deve ser criado, o formato esperado e, quando possível, use prefill.
+    </div>
+  </div>
+
+<div class="inference-card reveal" style="margin-top:22px">
     <h3>Prompts usados nos exemplos</h3>
     <p style="color:#8fa6ba;font-size:12px;line-height:1.7;margin:0 0 18px">Os exemplos abaixo seguem prompts usados nos projetos locais demonstrados na landing. A lista completa também vai dentro do pacote.</p>
 
@@ -362,6 +420,6 @@ Evite explicações quando o usuário pedir somente código.</pre>
 <span data-i18n="footer_place">FEITO NO BRASIL</span>
 </footer>
 
-<script src="./velum-release-v4.js?v=4"></script>
+<script src="./velum-release-v6.js?v=6"></script>
 </body>
 </html>

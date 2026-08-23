@@ -34,3 +34,7 @@ V5
 - adicionada estrutura de prompt recomendada:
   Crie um [o que você quiser] em um único HTML.
   Retorne somente o HTML completo.
+
+V6
+- added structured output JSON Schema section
+- copyable schema for language/code/markdown_full

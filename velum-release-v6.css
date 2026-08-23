@@ -554,3 +554,52 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .section-heading h2,html[lang="zh
     grid-template-columns:1fr;
   }
 }
+
+
+/* V6 — Structured Output */
+.structured-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  gap:22px;
+  align-items:start;
+}
+.structured-label{
+  display:block;
+  color:#78cfff;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.16em;
+  margin-bottom:10px;
+}
+.structured-codebox{
+  margin-top:0;
+}
+.structured-notes{
+  display:grid;
+  gap:12px;
+}
+.structured-note{
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(7,16,25,.58);
+  padding:16px;
+}
+.structured-note strong{
+  display:block;
+  color:#e8f4fc;
+  font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace;
+  margin-bottom:7px;
+}
+.structured-note p{
+  margin:0;
+  color:#8fa7b9;
+  font-size:11px;
+  line-height:1.65;
+}
+.structured-note code{
+  color:#83d4ff;
+}
+@media(max-width:900px){
+  .structured-grid{
+    grid-template-columns:1fr;
+  }
+}
