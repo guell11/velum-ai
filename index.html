@@ -7,7 +7,7 @@
 <meta content="VELUM Coder — modelo local 8B / ~1B ativo, pós-treinado com foco extremo em código e disponível quantizado no Hugging Face." data-i18n-content="meta_description" name="description"/>
 <meta content="#050b14" name="theme-color"/>
 <title>VELUM Coder — Local. Quantized. Code-first.</title>
-<link href="./velum-release-v3.css?v=3" rel="stylesheet"/>
+<link href="./velum-release-v4.css?v=4" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="noise"></div>
@@ -21,7 +21,7 @@
 <a data-i18n="nav_model" href="#modelo">MODELO</a>
 <a data-i18n="nav_arch" href="#arquitetura">ARQUITETURA</a>
 <a data-i18n="nav_projects" href="#projetos">PROJETOS</a>
-<a data-i18n="nav_release" href="#download">DOWNLOAD</a>
+<a href="#inferencia">INFERÊNCIA</a><a data-i18n="nav_release" href="#download">DOWNLOAD</a>
 </nav>
 <a class="button button-ghost header-cta" data-i18n="nav_cta" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer">BAIXAR NO HF ↗</a>
 <div class="language-switcher"><select aria-label="Selecionar idioma" id="language-select"><option value="pt-BR">PT-BR</option><option value="en">EN</option><option value="zh-CN">中文</option><option value="it">IT</option><option value="es">ES</option></select></div><button aria-expanded="false" aria-label="Abrir menu" class="menu-button" data-i18n-aria-label="aria_menu"><span></span><span></span></button>
@@ -183,8 +183,102 @@
 </div>
 </section>
 
+
+<section class="section inference-section" id="inferencia">
+  <div class="section-label">06 / INFERÊNCIA</div>
+
+  <div class="inference-head reveal">
+    <div>
+      <p class="eyebrow">CONFIGURAÇÃO RECOMENDADA</p>
+      <h2>USE DO<br>JEITO CERTO.</h2>
+    </div>
+    <p>VELUM-Coder foi pós-treinado de forma muito agressiva para código. Ele funciona melhor com sampling conservador, instrução explícita e um começo de resposta que já coloque o modelo no formato esperado. Sem isso, ele pode voltar para texto genérico em vez de entregar código completo.</p>
+  </div>
+
+  <div class="warning-strip reveal">
+    <strong>IMPORTANTE:</strong> este não é um modelo de conversa. Para geração de código, use prompts objetivos, peça explicitamente o formato de saída e, em tarefas maiores, use prefill do começo do arquivo esperado.
+  </div>
+
+  <div class="inference-grid">
+    <div class="inference-card reveal">
+      <h3>Sampling</h3>
+      <table class="inference-table">
+        <thead><tr><th>Parâmetro</th><th>Recomendado</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Temperature</strong></td><td><code>0.1 – 0.2</code></td><td>Mantém a geração focada e determinística.</td></tr>
+          <tr><td><strong>Top P</strong></td><td><code>0.9 – 0.95</code></td><td>Nucleus sampling padrão para cobertura de vocabulário.</td></tr>
+          <tr><td><strong>Top K</strong></td><td><code>40</code></td><td>Limita a dispersão de tokens.</td></tr>
+          <tr><td><strong>Min P</strong></td><td><code>0.05</code></td><td>Remove tokens de cauda longa com probabilidade irrelevante.</td></tr>
+          <tr><td><strong>Repetition Penalty</strong></td><td><code>1.0 – 1.05</code></td><td>Evite valores altos (&gt; 1.1), que podem quebrar sintaxes de código.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="inference-card reveal delay-1">
+      <h3>Prompting</h3>
+      <div class="prompt-tip">
+        <p><strong>Sensibilidade de instrução:</strong> para projetos completos, diga exatamente o artefato, o formato e que a saída deve conter somente o código.</p>
+        <p><strong>Prefill recomendado:</strong> comece a resposta com <code>&lt;!DOCTYPE html&gt;</code> para HTML, <code>import </code> para Python, ou o cabeçalho natural do arquivo esperado.</p>
+        <p><strong>System prompt:</strong> use algo curto e direto. O objetivo é colocar o modelo em modo de programação, não convidá-lo para escrever um ensaio filosófico sobre a própria existência.</p>
+      </div>
+
+      <div class="codebox">
+        <button class="copy-btn" data-copy-target="system-prompt">COPIAR</button>
+        <pre id="system-prompt">Você é um assistente especialista em programação.
+Gere código limpo, funcional, completo e bem estruturado.
+Siga exatamente o formato de saída solicitado.
+Evite explicações quando o usuário pedir somente código.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="inference-card reveal" style="margin-top:22px">
+    <h3>Prompts usados nos exemplos</h3>
+    <p style="color:#8fa6ba;font-size:12px;line-height:1.7;margin:0 0 18px">Os exemplos abaixo seguem prompts usados nos projetos locais demonstrados na landing. A lista completa também vai dentro do pacote.</p>
+
+    <div class="prompt-library">
+      <details>
+  <summary>Flappy Bird</summary>
+  <div class="prompt-body"><code>Crie um jogo Flappy Bird completo e responsivo em um único arquivo HTML. Retorne somente o HTML completo.</code></div>
+</details>
+<details>
+  <summary>Bonsai Voxel</summary>
+  <div class="prompt-body"><code>Crie uma experiência 3D interativa de um bonsai voxel em um único HTML. Retorne somente o HTML completo.</code></div>
+</details>
+<details>
+  <summary>Railway Rush</summary>
+  <div class="prompt-body"><code>Crie um joguinho 3D de carro em uma corrida ao lado de uma ferrovia. Retorne somente o HTML completo.</code></div>
+</details>
+<details>
+  <summary>Cyber Highway 1984</summary>
+  <div class="prompt-body"><code>Crie um jogo 3D de carro em uma rodovia cyberpunk retrô em um único HTML. Retorne somente o HTML completo.</code></div>
+</details>
+<details>
+  <summary>Doom Three.js</summary>
+  <div class="prompt-body"><code>Crie um jogo de tiro 3D inspirado em Doom usando Three.js em um único HTML. Retorne somente o HTML completo.</code></div>
+</details>
+<details>
+  <summary>Sistema Solar 3D</summary>
+  <div class="prompt-body"><code>Crie um sistema solar 3D interativo em um único HTML. Retorne somente o HTML completo.</code></div>
+</details>
+<details>
+  <summary>Semáforo do Caos</summary>
+  <div class="prompt-body"><code>Crie um jogo 3D chamado Semáforo do Caos em um único HTML. Retorne apenas o HTML.</code></div>
+</details>
+<details>
+  <summary>Deploy na Sexta às 18h</summary>
+  <div class="prompt-body"><code>Crie um jogo 3D chamado Deploy na Sexta às 18h em um único HTML. Retorne apenas o HTML.</code></div>
+</details>
+    </div>
+
+    <div class="prompt-actions">
+      <a href="./docs/prompts-dos-joguinhos.md" target="_blank" rel="noopener">ABRIR LISTA COMPLETA DE PROMPTS ↗</a>
+    </div>
+  </div>
+</section>
+
 <section class="section roadmap release-section" id="download">
-  <div class="section-label" data-i18n="sec_release">06 / RELEASE</div>
+  <div class="section-label" data-i18n="sec_release">07 / RELEASE</div>
   <div class="roadmap-head reveal">
     <p class="eyebrow" data-i18n="release_eyebrow">AVAILABLE NOW · QUANTIZED · HUGGING FACE</p>
     <h2 data-i18n="release_title">Já está<br/>disponível.</h2>
@@ -244,6 +338,6 @@
 <span data-i18n="footer_place">FEITO NO BRASIL</span>
 </footer>
 
-<script src="./velum-release-v3.js?v=3"></script>
+<script src="./velum-release-v4.js?v=4"></script>
 </body>
 </html>

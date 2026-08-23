@@ -19,3 +19,12 @@ A landing inclui:
 
 Observação:
 Os projetos demonstram capacidade funcional, mas não são apresentados como substitutos de benchmarks padronizados.
+
+V4
+- layout full-width
+- seção de configurações de inferência
+- tabela de sampling recomendado
+- dicas de prompting + prefill
+- system prompt recomendado
+- biblioteca de prompts dos exemplos
+- arquivo completo de prompts em docs/prompts-dos-joguinhos.md
