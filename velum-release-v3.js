@@ -8,7 +8,7 @@ const translations = {
     nav_model: 'MODELO', nav_arch: 'ARQUITETURA', nav_projects: 'PROJETOS', nav_roadmap: 'ROADMAP', nav_cta: 'VER O QUE ELE CRIA',
     hero_eyebrow: '<span class="pulse"></span> LOCAL-FIRST · ESPECIALISTA EM CÓDIGO',
     hero_desc: 'Um modelo pós-treinado para uma coisa: <strong>código.</strong><br>Executa localmente. Pensa em software. Constrói coisas que rodam.',
-    hero_explore: 'EXPLORAR O MODELO <span>↗</span>', hero_projects: 'VER PROJETOS GERADOS <span>↓</span>', hero_side_left: 'PÓS-TREINADO PARA CÓDIGO', hero_side_right: 'RIO DE JANEIRO · BRASIL',
+    hero_explore: 'EXPLORAR O MODELO <span>↗</span>', hero_projects: 'VER PROJETOS GERADOS <span>↓</span>', hero_side_left: 'PÓS-TREINADO PARA CÓDIGO', hero_side_right: 'HECHO EN BRASIL',
     metric_base_label: 'BASE', metric_focus_label: 'FOCO', metric_exec_label: 'EXECUÇÃO', metric_focus_value: '100% CODE', metric_exec_value: 'LOCAL',
     sec_model: '01 / MODELO', intro_eyebrow: 'BUILT, NOT ANSWERED.', intro_title: 'Menos chatbot.<br><em>Mais ferramenta.</em>',
     intro_p1: 'VELUM parte de um modelo base da <strong>Liquid AI</strong> com 8 bilhões de parâmetros totais e aproximadamente 1 bilhão ativo durante a inferência.',
@@ -24,7 +24,7 @@ const translations = {
     sec_code: '05 / CODE-FIRST', code_eyebrow: 'IDEIA ENTRA. SOFTWARE SAI.', code_title: 'O resultado não precisa ser outro parágrafo.', code_p: 'O objetivo do post-training é fazer o modelo operar como ferramenta de desenvolvimento: entender intenção, estruturar solução, gerar código, corrigir erros e iterar.',
     cap1_label: 'GERAÇÃO', cap1_value: 'projetos completos', cap2_label: 'DEBUG', cap2_value: 'análise + correção', cap3_label: 'REFATORAÇÃO', cap3_value: 'estrutura + clareza', cap4_label: 'PROTOTIPAGEM', cap4_value: 'ideia → executável',
     sec_roadmap: '06 / ROADMAP', road_eyebrow: 'EXPERIMENTAL. MENSURÁVEL. ABERTO A ITERAÇÃO.', road_title: 'O que vem agora.', road1_p: 'Expandir e refinar dados especializados em código.', road1_status: 'EM DESENVOLVIMENTO', road2_p: 'HumanEval, MBPP, throughput, TTFT e memória real.', road2_status: 'PRÓXIMO', road3_p: 'Explorar Q8, Q6, Q5 e Q4 para hardware local.', road3_status: 'PLANEJADO', road4_p: 'Checkpoint, documentação e integração local.', road4_status: 'PLANEJADO', road_note: 'Sem números mágicos antes de medir. A internet já possui benchmark inventado suficiente para várias gerações.',
-    final_eyebrow: 'VELUM / BRASIL', final_title: 'Inteligência<br>que fica perto.', final_p: 'Local. Especializada. Feita para quem constrói.', back_top: 'VOLTAR AO TOPO <span>↑</span>', footer_place: 'RIO DE JANEIRO · BRASIL',
+    final_eyebrow: 'VELUM / BRASIL', final_title: 'Inteligência<br>que fica perto.', final_p: 'Local. Especializada. Feita para quem constrói.', back_top: 'VOLTAR AO TOPO <span>↑</span>', footer_place: 'HECHO EN BRASIL',
     terminal: '<span class="muted">$</span> velum run\n\n<span class="blue">model</span>: VELUM-8B\n<span class="blue">mode</span>: local\n<span class="blue">focus</span>: code\n\n<span class="muted">&gt;</span> crie um jogo 3D com uma pista,\n  moedas e um trem ao lado da estrada\n\n<span class="green">✓ planejando arquitetura</span>\n<span class="green">✓ gerando game loop</span>\n<span class="green">✓ construindo cena</span>\n<span class="green">✓ conectando controles</span>\n<span class="green">✓ saída executável</span>\n\n<span class="accent">BUILD COMPLETE.</span>'
   },
   'en': {
@@ -34,7 +34,7 @@ const translations = {
     nav_model: 'MODEL', nav_arch: 'ARCHITECTURE', nav_projects: 'PROJECTS', nav_roadmap: 'ROADMAP', nav_cta: 'SEE WHAT IT BUILDS',
     hero_eyebrow: '<span class="pulse"></span> LOCAL-FIRST · CODE SPECIALIST',
     hero_desc: 'A model post-trained for one thing: <strong>code.</strong><br>Runs locally. Thinks in software. Builds things that run.',
-    hero_explore: 'EXPLORE THE MODEL <span>↗</span>', hero_projects: 'SEE GENERATED PROJECTS <span>↓</span>', hero_side_left: 'POST-TRAINED FOR CODE', hero_side_right: 'RIO DE JANEIRO · BRAZIL',
+    hero_explore: 'EXPLORE THE MODEL <span>↗</span>', hero_projects: 'SEE GENERATED PROJECTS <span>↓</span>', hero_side_left: 'POST-TRAINED FOR CODE', hero_side_right: 'MADE IN BRAZIL',
     metric_base_label: 'BASE', metric_focus_label: 'FOCUS', metric_exec_label: 'RUNTIME', metric_focus_value: '100% CODE', metric_exec_value: 'LOCAL',
     sec_model: '01 / MODEL', intro_eyebrow: 'BUILT, NOT ANSWERED.', intro_title: 'Less chatbot.<br><em>More tool.</em>',
     intro_p1: 'VELUM starts from a <strong>Liquid AI</strong> base model with 8 billion total parameters and approximately 1 billion active during inference.',
@@ -50,7 +50,7 @@ const translations = {
     sec_code: '05 / CODE-FIRST', code_eyebrow: 'IDEA IN. SOFTWARE OUT.', code_title: 'The result does not have to be another paragraph.', code_p: 'The goal of post-training is to make the model operate as a development tool: understand intent, structure solutions, generate code, fix errors and iterate.',
     cap1_label: 'GENERATION', cap1_value: 'complete projects', cap2_label: 'DEBUG', cap2_value: 'analysis + fixes', cap3_label: 'REFACTORING', cap3_value: 'structure + clarity', cap4_label: 'PROTOTYPING', cap4_value: 'idea → executable',
     sec_roadmap: '06 / ROADMAP', road_eyebrow: 'EXPERIMENTAL. MEASURABLE. OPEN TO ITERATION.', road_title: 'What comes next.', road1_p: 'Expand and refine code-specialized training data.', road1_status: 'IN DEVELOPMENT', road2_p: 'HumanEval, MBPP, throughput, TTFT and real memory usage.', road2_status: 'NEXT', road3_p: 'Explore Q8, Q6, Q5 and Q4 for local hardware.', road3_status: 'PLANNED', road4_p: 'Checkpoint, documentation and local integration.', road4_status: 'PLANNED', road_note: 'No magic numbers before measurement. The internet already has enough invented benchmarks for several generations.',
-    final_eyebrow: 'VELUM / BRAZIL', final_title: 'Intelligence<br>that stays close.', final_p: 'Local. Specialized. Made for builders.', back_top: 'BACK TO TOP <span>↑</span>', footer_place: 'RIO DE JANEIRO · BRAZIL',
+    final_eyebrow: 'VELUM / BRAZIL', final_title: 'Intelligence<br>that stays close.', final_p: 'Local. Specialized. Made for builders.', back_top: 'BACK TO TOP <span>↑</span>', footer_place: 'MADE IN BRAZIL',
     terminal: '<span class="muted">$</span> velum run\n\n<span class="blue">model</span>: VELUM-8B\n<span class="blue">mode</span>: local\n<span class="blue">focus</span>: code\n\n<span class="muted">&gt;</span> build a 3D racing game with a track,\n  coins and a train beside the road\n\n<span class="green">✓ planning architecture</span>\n<span class="green">✓ generating game loop</span>\n<span class="green">✓ building scene</span>\n<span class="green">✓ wiring controls</span>\n<span class="green">✓ runnable output</span>\n\n<span class="accent">BUILD COMPLETE.</span>'
   },
   'zh-CN': {
@@ -86,7 +86,7 @@ const translations = {
     nav_model: 'MODELLO', nav_arch: 'ARCHITETTURA', nav_projects: 'PROGETTI', nav_roadmap: 'ROADMAP', nav_cta: 'VEDI COSA COSTRUISCE',
     hero_eyebrow: '<span class="pulse"></span> LOCAL-FIRST · SPECIALISTA DEL CODICE',
     hero_desc: 'Un modello post-addestrato per una cosa: <strong>codice.</strong><br>Funziona in locale. Ragiona sul software. Costruisce cose che funzionano.',
-    hero_explore: 'ESPLORA IL MODELLO <span>↗</span>', hero_projects: 'VEDI I PROGETTI GENERATI <span>↓</span>', hero_side_left: 'POST-TRAINED FOR CODE', hero_side_right: 'RIO DE JANEIRO · BRASILE',
+    hero_explore: 'ESPLORA IL MODELLO <span>↗</span>', hero_projects: 'VEDI I PROGETTI GENERATI <span>↓</span>', hero_side_left: 'POST-TRAINED FOR CODE', hero_side_right: 'HECHO EN BRASILE',
     metric_base_label: 'BASE', metric_focus_label: 'FOCUS', metric_exec_label: 'ESECUZIONE', metric_focus_value: '100% CODE', metric_exec_value: 'LOCALE',
     sec_model: '01 / MODELLO', intro_eyebrow: 'BUILT, NOT ANSWERED.', intro_title: 'Meno chatbot.<br><em>Più strumento.</em>',
     intro_p1: 'VELUM parte da un modello base di <strong>Liquid AI</strong> con 8 miliardi di parametri totali e circa 1 miliardo attivo durante l’inferenza.',
@@ -102,7 +102,7 @@ const translations = {
     sec_code: '05 / CODE-FIRST', code_eyebrow: 'IDEA IN. SOFTWARE OUT.', code_title: 'Il risultato non deve essere un altro paragrafo.', code_p: 'L’obiettivo del post-training è far operare il modello come strumento di sviluppo: comprendere l’intento, strutturare la soluzione, generare codice, correggere errori e iterare.',
     cap1_label: 'GENERAZIONE', cap1_value: 'progetti completi', cap2_label: 'DEBUG', cap2_value: 'analisi + correzione', cap3_label: 'REFACTORING', cap3_value: 'struttura + chiarezza', cap4_label: 'PROTOTIPAZIONE', cap4_value: 'idea → eseguibile',
     sec_roadmap: '06 / ROADMAP', road_eyebrow: 'SPERIMENTALE. MISURABILE. APERTO ALL’ITERAZIONE.', road_title: 'Cosa viene dopo.', road1_p: 'Espandere e perfezionare i dati specializzati nel codice.', road1_status: 'IN SVILUPPO', road2_p: 'HumanEval, MBPP, throughput, TTFT e memoria reale.', road2_status: 'PROSSIMO', road3_p: 'Esplorare Q8, Q6, Q5 e Q4 per hardware locale.', road3_status: 'PIANIFICATO', road4_p: 'Checkpoint, documentazione e integrazione locale.', road4_status: 'PIANIFICATO', road_note: 'Niente numeri magici prima delle misurazioni. Internet ha già abbastanza benchmark inventati per diverse generazioni.',
-    final_eyebrow: 'VELUM / BRASILE', final_title: 'Intelligenza<br>che resta vicina.', final_p: 'Locale. Specializzata. Creata per chi costruisce.', back_top: 'TORNA SU <span>↑</span>', footer_place: 'RIO DE JANEIRO · BRASILE',
+    final_eyebrow: 'VELUM / BRASILE', final_title: 'Intelligenza<br>che resta vicina.', final_p: 'Locale. Specializzata. Creata per chi costruisce.', back_top: 'TORNA SU <span>↑</span>', footer_place: 'HECHO EN BRASILE',
     terminal: '<span class="muted">$</span> velum run\n\n<span class="blue">model</span>: VELUM-8B\n<span class="blue">mode</span>: local\n<span class="blue">focus</span>: code\n\n<span class="muted">&gt;</span> crea un gioco di corse 3D con una pista,\n  monete e un treno accanto alla strada\n\n<span class="green">✓ pianificazione architettura</span>\n<span class="green">✓ generazione game loop</span>\n<span class="green">✓ costruzione scena</span>\n<span class="green">✓ collegamento controlli</span>\n<span class="green">✓ output eseguibile</span>\n\n<span class="accent">BUILD COMPLETE.</span>'
   },
   'es': {
@@ -151,7 +151,7 @@ Object.assign(translations['pt-BR'], {
   feat2_title:'Post-training extremo', feat2_p:'95% código, 5% linguagem natural para preservar instrução e comunicação.',
   feat3_title:'Draft model', feat3_p:'LFM2.5-230M usado como draft model no stack de inferência.',
   projects_title:'Código que<br>realmente roda.', projects_p:'Sem benchmark sintético por enquanto. Em vez de esconder isso, mostramos avaliações funcionais: projetos completos gerados pelo modelo e executáveis diretamente no navegador.',
-  try_demo:'TESTAR NO NAVEGADOR ↗',
+  try_demo:'TESTAR JOGO ↗',
   code_p:'A especialização privilegia geração de código, debugging, refatoração, implementação multi-etapa e criação de projetos. Conversa genérica não é o objetivo do modelo; linguagem natural existe para instruir o trabalho de código.',
   sec_release:'06 / RELEASE', release_eyebrow:'AVAILABLE NOW · QUANTIZED · HUGGING FACE', release_title:'Já está<br>disponível.',
   release_model_label:'MODELO', release_model_p:'Baixe as versões quantizadas diretamente no Hugging Face e rode localmente no seu próprio stack.', hf_cta:'ABRIR NO HUGGING FACE ↗',
@@ -178,7 +178,7 @@ Object.assign(translations['en'], {
   feat2_title:'Extreme post-training', feat2_p:'95% code, 5% natural language to preserve instruction and communication.',
   feat3_title:'Draft model', feat3_p:'LFM2.5-230M used as the draft model in the inference stack.',
   projects_title:'Code that<br>actually runs.', projects_p:'No synthetic benchmark table yet. Instead, these are functional evaluations: complete generated projects that can run directly in the browser.',
-  try_demo:'TRY IN BROWSER ↗',
+  try_demo:'PLAY DEMO ↗',
   code_p:'Specialization prioritizes code generation, debugging, refactoring, multi-step implementation and project creation. General chat is not the model’s target; natural language exists to direct code work.',
   sec_release:'06 / RELEASE', release_eyebrow:'AVAILABLE NOW · QUANTIZED · HUGGING FACE', release_title:'Available<br>now.',
   release_model_label:'MODEL', release_model_p:'Download quantized builds directly from Hugging Face and run them locally in your own stack.', hf_cta:'OPEN ON HUGGING FACE ↗',
@@ -203,7 +203,7 @@ Object.assign(translations['es'], {
   feat2_title:'Post-training extremo', feat2_p:'95% código y 5% lenguaje natural para conservar instrucciones y comunicación.',
   feat3_title:'Draft model', feat3_p:'LFM2.5-230M usado como draft model en el stack de inferencia.',
   projects_title:'Código que<br>realmente funciona.', projects_p:'Todavía no hay una tabla de benchmarks sintéticos. En su lugar mostramos evaluaciones funcionales: proyectos completos generados y ejecutables en el navegador.',
-  try_demo:'PROBAR EN EL NAVEGADOR ↗',
+  try_demo:'PROBAR DEMO ↗',
   code_p:'La especialización prioriza generación de código, debugging, refactorización, implementación multi-etapa y creación de proyectos. La conversación general no es el objetivo.',
   sec_release:'06 / RELEASE', release_eyebrow:'DISPONIBLE · CUANTIZADO · HUGGING FACE', release_title:'Disponible<br>ahora.',
   release_model_label:'MODELO', release_model_p:'Descarga las versiones cuantizadas desde Hugging Face y ejecútalas localmente.', hf_cta:'ABRIR EN HUGGING FACE ↗',
@@ -228,7 +228,7 @@ Object.assign(translations['it'], {
   feat2_title:'Post-training estremo', feat2_p:'95% codice, 5% linguaggio naturale per preservare istruzioni e comunicazione.',
   feat3_title:'Draft model', feat3_p:'LFM2.5-230M usato come draft model nello stack di inferenza.',
   projects_title:'Codice che<br>funziona davvero.', projects_p:'Per ora niente tabella di benchmark sintetici. Mostriamo invece valutazioni funzionali: progetti completi generati ed eseguibili nel browser.',
-  try_demo:'PROVA NEL BROWSER ↗',
+  try_demo:'PROVA DEMO ↗',
   code_p:'La specializzazione privilegia generazione di codice, debugging, refactoring, implementazioni multi-step e creazione di progetti. La chat generalista non è l’obiettivo.',
   sec_release:'06 / RELEASE', release_eyebrow:'DISPONIBILE · QUANTIZZATO · HUGGING FACE', release_title:'Disponibile<br>ora.',
   release_model_label:'MODELLO', release_model_p:'Scarica le versioni quantizzate da Hugging Face ed eseguile localmente nel tuo stack.', hf_cta:'APRI SU HUGGING FACE ↗',
@@ -253,7 +253,7 @@ Object.assign(translations['zh-CN'], {
   feat2_title:'极致代码后训练', feat2_p:'95% 代码，5% 自然语言，用于保持指令理解与沟通。',
   feat3_title:'Draft model', feat3_p:'推理栈使用 LFM2.5-230M 作为 draft model。',
   projects_title:'真正能运行的<br>代码。', projects_p:'目前没有漂亮的合成 benchmark 表格。这里展示的是功能评测：由模型生成并可直接在浏览器运行的完整项目。',
-  try_demo:'在浏览器中体验 ↗',
+  try_demo:'试玩 DEMO ↗',
   code_p:'专项训练重点是代码生成、调试、重构、多步骤实现与项目创建。通用聊天不是目标，自然语言主要用于指导代码任务。',
   sec_release:'06 / 发布', release_eyebrow:'现已发布 · 已量化 · HUGGING FACE', release_title:'现在<br>即可使用。',
   release_model_label:'模型', release_model_p:'直接从 Hugging Face 下载量化版本，并在自己的本地推理栈运行。', hf_cta:'打开 HUGGING FACE ↗',
@@ -392,33 +392,3 @@ document.querySelectorAll('.video-toggle').forEach((button) => {
 });
 
 
-// Playable functional evaluations.
-const demoModal = document.getElementById('demo-modal');
-const demoFrame = document.getElementById('demo-frame');
-const demoClose = document.getElementById('demo-close');
-
-function closeDemo() {
-  if (!demoModal || !demoFrame) return;
-  demoModal.classList.remove('open');
-  demoModal.setAttribute('aria-hidden', 'true');
-  demoFrame.src = 'about:blank';
-  document.body.style.overflow = '';
-}
-
-document.querySelectorAll('.demo-launch').forEach((button) => {
-  button.addEventListener('click', () => {
-    if (!demoModal || !demoFrame) return;
-    demoFrame.src = button.dataset.demo;
-    demoModal.classList.add('open');
-    demoModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  });
-});
-
-demoClose?.addEventListener('click', closeDemo);
-demoModal?.addEventListener('click', (event) => {
-  if (event.target === demoModal) closeDemo();
-});
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeDemo();
-});

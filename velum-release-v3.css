@@ -162,3 +162,115 @@ html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .section-heading h2,html[lang="zh
   .release-grid,.benchmark-note{grid-template-columns:1fr}
   .benchmark-note{gap:18px}
 }
+
+
+/* v3 fixes */
+.hero-side-label.right{letter-spacing:.18em}
+.footer-meta span:last-child{letter-spacing:.12em}
+
+.release-grid{
+  display:grid;
+  grid-template-columns:minmax(320px, 0.95fr) minmax(420px, 1.05fr);
+  gap:22px;
+  align-items:start;
+}
+.release-card{
+  min-height:100%;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,rgba(10,27,42,.78),rgba(5,12,20,.72));
+  padding:28px;
+}
+.release-card h3{
+  font-size:32px;
+  line-height:1.05;
+  word-break:break-word;
+}
+.spec-table{
+  width:100%;
+  table-layout:fixed;
+}
+.spec-table th{
+  width:34%;
+}
+.spec-table td{
+  word-break:break-word;
+}
+.benchmark-note{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr);
+  gap:28px;
+  padding:26px 28px;
+  border:1px solid rgba(95,195,255,.15);
+  background:rgba(6,16,26,.65);
+}
+.benchmark-note h3{
+  font-size:20px;
+  line-height:1.15;
+  margin:0;
+}
+.release-policy{
+  margin-top:18px;
+  padding:22px 28px;
+}
+
+.project-grid{
+  align-items:start;
+}
+.project-card{
+  display:flex;
+  flex-direction:column;
+}
+.project-card .project-image{
+  aspect-ratio:16/10;
+  object-fit:cover;
+}
+.project-card:first-child .project-image{
+  aspect-ratio:9/16;
+  object-fit:cover;
+}
+.project-content{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.demo-launch{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:fit-content;
+  min-width:170px;
+  min-height:40px;
+  padding:0 16px;
+  margin-top:14px;
+  border:1px solid rgba(95,195,255,.28);
+  background:rgba(13,69,112,.12);
+  color:#cceaff;
+  font-size:9px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:.2s ease;
+}
+.demo-launch:hover{
+  border-color:var(--blue);
+  background:rgba(26,125,207,.16);
+  transform:translateY(-1px);
+}
+@media (max-width: 1100px){
+  .release-grid,
+  .benchmark-note{
+    grid-template-columns:1fr;
+  }
+}
+@media (max-width: 800px){
+  .project-card:first-child .project-image,
+  .project-card .project-image{
+    aspect-ratio:16/10;
+  }
+  .demo-launch{
+    width:100%;
+  }
+}
