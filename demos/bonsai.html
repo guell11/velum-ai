@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bonsai Voxel 3D - Interativo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #232733 0%, #111318 100%);
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    #canvas-container {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+    .ui-overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #eaecef;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 6px 0;
+      color: #6ee7b7;
+      text-shadow: 0 0 12px rgba(110, 231, 183, 0.3);
+    }
+    .instructions {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+      background: rgba(17, 24, 39, 0.6);
+      padding: 10px 14px;
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ui-overlay">
+    <div class="title">盆栽 • Bonsai Voxel</div>
+    <div class="instructions">
+      ✨ <b>Passe o mouse</b> para agitar os cubos<br/>
+      🖱️ <b>Clique</b> para disparar onda de choque e soltar folhas<br/>
+      🔄 <b>Arraste</b> para girar a câmera (Orbit)
+    </div>
+  </div>
+
+  <div id="canvas-container"></div>
+
+  <!-- Three.js e OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+  <script>
+    // --- 1. CENA, CÂMERA E RENDERER ---
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x13151b, 0.02);
+
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(22, 18, 26);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.maxPolarAngle = Math.PI / 2 + 0.05; // não ir muito abaixo do chão
+    controls.minDistance = 10;
+    controls.maxDistance = 60;
+    controls.target.set(0, 7, 0);
+
+    // --- 2. ILUMINAÇÃO DE ESTÚDIO ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+    scene.add(ambientLight);
+
+    const sunLight = new THREE.DirectionalLight(0xfff7e6, 1.2);
+    sunLight.position.set(20, 35, 18);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.width = 2048;
+    sunLight.shadow.mapSize.height = 2048;
+    sunLight.shadow.bias = -0.0005;
+    scene.add(sunLight);
+
+    // Luz de preenchimento azulada suave
+    const rimLight = new THREE.DirectionalLight(0x6ee7b7, 0.4);
+    rimLight.position.set(-20, 15, -20);
+    scene.add(rimLight);
+
+    // Chão receptor de sombra
+    const shadowFloor = new THREE.Mesh(
+      new THREE.PlaneGeometry(80, 80),
+      new THREE.ShadowMaterial({ opacity: 0.25 })
+    );
+    shadowFloor.rotation.x = -Math.PI / 2;
+    shadowFloor.position.y = -0.1;
+    shadowFloor.receiveShadow = true;
+    scene.add(shadowFloor);
+
+    // --- 3. CONSTRUÇÃO DO BONSAI EM VOXELS ---
+    const treeGroup = new THREE.Group();
+    scene.add(treeGroup);
+
+    const boxGeo = new THREE.BoxGeometry(0.85, 0.85, 0.85);
+    const voxelList = [];
+
+    // Paleta de Cores
+    const COLORS = {
+      pot: [0x1f242d, 0x2a303c, 0x161920],
+      soil: [0x261c14, 0x332419, 0x1b130e],
+      moss: [0x3d6b2c, 0x4e8538, 0x2e5321],
+      wood: [0x4a2f1c, 0x5c3a23, 0x3b2414, 0x6e462c],
+      foliage: [0x1d5c38, 0x2d7a4c, 0x3e9760, 0x52b77c, 0x184a2d],
+      blossom: [0xf472b6, 0xfb7185, 0xfbcfe8] // pétalas ocasionais
+    };
+
+    function createVoxel(x, y, z, colorPalette, type = 'solid') {
+      const colorHex = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      const mat = new THREE.MeshStandardMaterial({
+        color: colorHex,
+        roughness: type === 'leaf' ? 0.4 : 0.8,
+        metalness: 0.05,
+        flatShading: true
+      });
+
+      const mesh = new THREE.Mesh(boxGeo, mat);
+      mesh.position.set(x, y, z);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+
+      mesh.userData = {
+        basePos: new THREE.Vector3(x, y, z),
+        vel: new THREE.Vector3(0, 0, 0),
+        targetScale: 1,
+        curScale: 1,
+        scaleVel: 0,
+        type: type,
+        origColor: new THREE.Color(colorHex),
+        phase: Math.random() * Math.PI * 2
+      };
+
+      treeGroup.add(mesh);
+      voxelList.push(mesh);
+      return mesh;
+    }
+
+    // --- VASO DE CERÂMICA ---
+    for (let x = -6; x <= 6; x++) {
+      for (let z = -4; z <= 4; z++) {
+        const isBorder = (x === -6 || x === 6 || z === -4 || z === 4);
+        // Base
+        createVoxel(x, 0, z, COLORS.pot, 'pot');
+        // Borda e Terra
+        if (isBorder) {
+          createVoxel(x, 0.9, z, COLORS.pot, 'pot');
+          createVoxel(x, 1.8, z, COLORS.pot, 'pot');
+        } else {
+          // Terra com detalhes de musgo
+          const isMoss = Math.random() > 0.4;
+          createVoxel(x, 0.9, z, isMoss ? COLORS.moss : COLORS.soil, 'soil');
+          if (Math.random() > 0.6) {
+            createVoxel(x, 1.4, z, COLORS.moss, 'moss');
+          }
+        }
+      }
+    }
+    // Pés do vaso
+    [[-5,-3], [5,-3], [-5,3], [5,3]].forEach(([px, pz]) => {
+      createVoxel(px, -0.85, pz, COLORS.pot, 'pot');
+    });
+
+    // --- TRONCO ROBUSTO E CURVADO (ESTILO MOYOGI) ---
+    function addThickPoint(cx, cy, cz, r = 1.2) {
+      for (let dx = -r; dx <= r; dx += 0.8) {
+        for (let dy = -r; dy <= r; dy += 0.8) {
+          for (let dz = -r; dz <= r; dz += 0.8) {
+            if (Math.hypot(dx, dy, dz) <= r + 0.2) {
+              if (!voxelList.some(v => v.userData.basePos.distanceTo(new THREE.Vector3(cx + dx, cy + dy, cz + dz)) < 0.6)) {
+                createVoxel(cx + dx, cy + dy, cz + dz, COLORS.wood, 'wood');
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Raízes aparentes (Nebari)
+    [[-1.8, 1.2, 0.8], [1.8, 1.2, -0.8], [-0.5, 1.2, -1.8], [1.2, 1.2, 1.6], [-2, 1, -1.2], [2.2, 1, 1]].forEach(([rx, ry, rz]) => {
+      addThickPoint(rx, ry, rz, 0.8);
+    });
+
+    // Curva do tronco principal (S-curve)
+    const spine = [
+      [0, 1.8, 0, 1.6],
+      [0.4, 2.8, 0.2, 1.5],
+      [1.1, 4.0, 0.5, 1.4],
+      [1.8, 5.4, 0.3, 1.3],
+      [1.6, 6.8, -0.2, 1.2],
+      [0.6, 8.2, -0.6, 1.1],
+      [-0.6, 9.6, -0.4, 1.0],
+      [-1.4, 11.0, 0.2, 0.9],
+      [-1.0, 12.4, 0.6, 0.8],
+      [-0.2, 13.8, 0.4, 0.7],
+      [0.2, 14.8, 0.1, 0.6]
+    ];
+    spine.forEach(([x, y, z, r]) => addThickPoint(x, y, z, r));
+
+    // Galhos laterais
+    function makeBranch(start, end, radius) {
+      const steps = 6;
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const bx = THREE.MathUtils.lerp(start[0], end[0], t);
+        const by = THREE.MathUtils.lerp(start[1], end[1], t);
+        const bz = THREE.MathUtils.lerp(start[2], end[2], t);
+        addThickPoint(bx, by, bz, radius * (1 - t * 0.4));
+      }
+    }
+
+    makeBranch([1.8, 5.4, 0.3], [5.2, 6.2, 1.8], 0.9);   // Galho inferior direito
+    makeBranch([-0.6, 9.6, -0.4], [-5.0, 10.5, -2.2], 0.8); // Galho médio esquerdo
+    makeBranch([-1.0, 12.4, 0.6], [2.8, 13.2, -2.5], 0.7); // Galho superior de fundo
+    makeBranch([-1.4, 11.0, 0.2], [-3.2, 12.2, 2.4], 0.6); // Galho frontal esquerdo
+
+    // --- NUVENS DE FOLHAGEM DENSAS (PADS) ---
+    function makeFoliageCloud(cx, cy, cz, rx, ry, rz) {
+      for (let x = -rx; x <= rx; x += 0.8) {
+        for (let y = -ry; y <= ry; y += 0.8) {
+          for (let z = -rz; z <= rz; z += 0.8) {
+            const dist = Math.pow(x / rx, 2) + Math.pow(y / ry, 2) + Math.pow(z / rz, 2);
+            if (dist <= 1.0 && Math.random() > 0.15) {
+              const finalColor = Math.random() > 0.94 ? COLORS.blossom : COLORS.foliage;
+              createVoxel(cx + x, cy + y, cz + z, finalColor, 'leaf');
+            }
+          }
+        }
+      }
+    }
+
+    // Criação dos tufos de folhas
+    makeFoliageCloud(6.0, 7.0, 2.2, 3.2, 1.6, 2.8);    // Nuvem baixa direita
+    makeFoliageCloud(-5.8, 11.2, -2.5, 3.6, 1.8, 3.2); // Nuvem média esquerda
+    makeFoliageCloud(3.2, 13.8, -3.0, 3.0, 1.5, 2.6);  // Nuvem alta trás
+    makeFoliageCloud(-3.6, 12.8, 2.8, 2.8, 1.4, 2.5);  // Nuvem média frente
+    makeFoliageCloud(0.2, 15.6, 0.2, 4.4, 2.2, 3.8);   // Copa do topo (Apex)
+
+    // --- 4. SISTEMA DE FOLHAS CAINDO ---
+    const fallingLeaves = [];
+    const leafGeo = new THREE.BoxGeometry(0.4, 0.15, 0.4);
+
+    function spawnFallingLeaves(center, count = 12) {
+      for (let i = 0; i < count; i++) {
+        const mat = new THREE.MeshBasicMaterial({
+          color: Math.random() > 0.4 ? 0x52b77c : 0xf472b6
+        });
+        const leaf = new THREE.Mesh(leafGeo, mat);
+        leaf.position.copy(center).add(new THREE.Vector3(
+          (Math.random() - 0.5) * 3,
+          (Math.random() - 0.5) * 1.5,
+          (Math.random() - 0.5) * 3
+        ));
+        leaf.userData = {
+          vel: new THREE.Vector3(
+            (Math.random() - 0.5) * 0.1,
+            -Math.random() * 0.08 - 0.04,
+            (Math.random() - 0.5) * 0.1
+          ),
+          rotVel: new THREE.Vector3(
+            Math.random() * 0.1,
+            Math.random() * 0.1,
+            Math.random() * 0.1
+          ),
+          life: 1.0
+        };
+        scene.add(leaf);
+        fallingLeaves.push(leaf);
+      }
+    }
+
+    // --- 5. INTERATIVIDADE COM O MOUSE ---
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-1000, -1000);
+    const mouseScreen = { x: 0, y: 0 };
+
+    window.addEventListener('pointermove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      mouseScreen.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseScreen.y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+      // Raycast para o hover
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(voxelList);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0].object;
+        const hitPos = hit.position;
+
+        // Afeta o bloco atingido e os blocos vizinhos
+        voxelList.forEach(v => {
+          const d = v.position.distanceTo(hitPos);
+          if (d < 3.2) {
+            const force = (1 - d / 3.2) * 0.35;
+            const dir = v.position.clone().sub(hitPos).normalize();
+            v.userData.vel.add(dir.multiplyScalar(force));
+            v.userData.vel.y += force * 0.6;
+            v.userData.targetScale = 1.35;
+            
+            // Destaque de luz/emissivo temporário
+            v.material.emissive.setHex(0x34d399);
+            v.material.emissiveIntensity = 0.6;
+          }
+        });
+      }
+    });
+
+    // Clique para disparar onda de choque e pétalas
+    window.addEventListener('pointerdown', (e) => {
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(voxelList);
+
+      const targetPos = intersects.length > 0 ? intersects[0].object.position : new THREE.Vector3(0, 10, 0);
+
+      // Onda de choque
+      voxelList.forEach(v => {
+        const d = v.userData.basePos.distanceTo(targetPos);
+        setTimeout(() => {
+          v.userData.vel.y += Math.sin(d * 0.8) * 0.45;
+          v.userData.targetScale = 1.4;
+        }, d * 35);
+      });
+
+      spawnFallingLeaves(targetPos, 20);
+    });
+
+    // Redimensionamento de tela
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // --- 6. LOOP DE ANIMAÇÃO COM FÍSICA DE MOLA ---
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = clock.getElapsedTime();
+
+      // Parallax sutil do mouse inclinando a árvore
+      treeGroup.rotation.y = THREE.MathUtils.lerp(treeGroup.rotation.y, mouseScreen.x * 0.15, 0.05);
+      treeGroup.rotation.x = THREE.MathUtils.lerp(treeGroup.rotation.x, -mouseScreen.y * 0.08, 0.05);
+
+      // Atualização dos Voxels (Mola + Vento Orgânico)
+      const springK = 0.12;
+      const damping = 0.82;
+
+      for (let i = 0; i < voxelList.length; i++) {
+        const v = voxelList[i];
+        const u = v.userData;
+
+        // Vento natural afetando principalmente as folhas
+        let windOffset = new THREE.Vector3(0, 0, 0);
+        if (u.type === 'leaf') {
+          const sway = Math.sin(time * 2.5 + u.basePos.y * 0.6 + u.phase) * 0.07;
+          windOffset.x = sway;
+          windOffset.z = sway * 0.5;
+        }
+
+        // Força de retorno à posição original
+        const targetPos = u.basePos.clone().add(windOffset);
+        const force = targetPos.sub(v.position).multiplyScalar(springK);
+
+        u.vel.add(force);
+        u.vel.multiplyScalar(damping);
+        v.position.add(u.vel);
+
+        // Mola de Escala
+        const scaleForce = (1.0 - u.curScale) * 0.15;
+        u.scaleVel += scaleForce;
+        u.scaleVel *= 0.8;
+        u.curScale += u.scaleVel + (u.targetScale - 1.0) * 0.1;
+        u.targetScale = THREE.MathUtils.lerp(u.targetScale, 1.0, 0.1);
+        v.scale.setScalar(u.curScale);
+
+        // Redução suave do brilho emissivo
+        if (v.material.emissiveIntensity > 0) {
+          v.material.emissiveIntensity = THREE.MathUtils.lerp(v.material.emissiveIntensity, 0, 0.08);
+        }
+      }
+
+      // Atualizar folhas caindo
+      for (let i = fallingLeaves.length - 1; i >= 0; i--) {
+        const leaf = fallingLeaves[i];
+        leaf.position.add(leaf.userData.vel);
+        leaf.rotation.x += leaf.userData.rotVel.x;
+        leaf.rotation.y += leaf.userData.rotVel.y;
+        leaf.userData.vel.x += (Math.random() - 0.5) * 0.01;
+
+        if (leaf.position.y <= 0) {
+          scene.remove(leaf);
+          leaf.geometry.dispose();
+          leaf.material.dispose();
+          fallingLeaves.splice(i, 1);
+        }
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

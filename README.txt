@@ -1,18 +1,21 @@
-VELUM Landing Page — Multilíngue
+VELUM LANDING PAGE — RELEASE BUILD
 
-Idiomas incluídos:
-- Português (Brasil)
-- English
-- 中文 / Mandarim (Chinês Simplificado)
-- Italiano
-- Español
+Modelo:
+- VELUM-Coder
+- Base: unsloth/LFM2.5-8B-A1B
+- Draft model: LFM2.5-230M
+- 8B total / ~1B active
+- Post-training: ~95% code / ~5% natural language
+- Distribuição: quantized model only
+- Hugging Face: https://huggingface.co/guell00/VELUM-Coder
 
-O seletor de idioma fica no cabeçalho. A preferência é salva no localStorage e o site tenta detectar o idioma do navegador na primeira visita.
+A landing inclui:
+- PT-BR / English / 中文 / Italiano / Español
+- teasers em vídeo
+- screenshots de avaliações funcionais
+- demos jogáveis embutidas (Flappy Bird, Bonsai Voxel, Railway Rush)
+- seção transparente sobre benchmarks
+- link direto para download no Hugging Face
 
-Arquivos principais:
-- index.html
-- styles.css
-- script.js
-- assets/
-
-Abra index.html em um navegador ou publique a pasta inteira em GitHub Pages, Vercel, Netlify ou servidor estático.
+Observação:
+Os projetos demonstram capacidade funcional, mas não são apresentados como substitutos de benchmarks padronizados.

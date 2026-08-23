@@ -4,9 +4,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="VELUM — modelo local 8B / ~1B ativo, pós-treinado para código." data-i18n-content="meta_description" name="description"/>
+<meta content="VELUM Coder — modelo local 8B / ~1B ativo, pós-treinado com foco extremo em código e disponível quantizado no Hugging Face." data-i18n-content="meta_description" name="description"/>
 <meta content="#050b14" name="theme-color"/>
-<title>VELUM — Local. Fast. Code-first.</title>
+<title>VELUM Coder — Local. Quantized. Code-first.</title>
 <link href="./styles.css" rel="stylesheet"/>
 </head>
 <body>
@@ -21,9 +21,9 @@
 <a data-i18n="nav_model" href="#modelo">MODELO</a>
 <a data-i18n="nav_arch" href="#arquitetura">ARQUITETURA</a>
 <a data-i18n="nav_projects" href="#projetos">PROJETOS</a>
-<a data-i18n="nav_roadmap" href="#roadmap">ROADMAP</a>
+<a data-i18n="nav_release" href="#download">DOWNLOAD</a>
 </nav>
-<a class="button button-ghost header-cta" data-i18n="nav_cta" href="#projetos">VER O QUE ELE CRIA</a>
+<a class="button button-ghost header-cta" data-i18n="nav_cta" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer">BAIXAR NO HF ↗</a>
 <div class="language-switcher"><select aria-label="Selecionar idioma" id="language-select"><option value="pt-BR">PT-BR</option><option value="en">EN</option><option value="zh-CN">中文</option><option value="it">IT</option><option value="es">ES</option></select></div><button aria-expanded="false" aria-label="Abrir menu" class="menu-button" data-i18n-aria-label="aria_menu"><span></span><span></span></button>
 </header>
 <main>
@@ -35,18 +35,18 @@
 <div class="eyebrow" data-i18n="hero_eyebrow"><span class="pulse"></span> LOCAL-FIRST · CODE SPECIALIST</div>
 <h1 id="hero-title">VELUM</h1>
 <p class="hero-kicker">8B TOTAL <span>/</span> ~1B ACTIVE</p>
-<p class="hero-description" data-i18n="hero_desc">Um modelo pós-treinado para uma coisa: <strong>código.</strong><br/>Executa localmente. Pensa em software. Constrói coisas que rodam.</p>
+<p class="hero-description" data-i18n="hero_desc">Um modelo <strong>já disponível</strong>, quantizado e pós-treinado quase inteiramente para <strong>código.</strong><br/>Local-first. Não é um chatbot. É uma ferramenta para construir software.</p>
 <div class="hero-actions">
-<a class="button button-primary" data-i18n="hero_explore" href="#modelo">EXPLORAR O MODELO <span>↗</span></a>
-<a class="text-link" data-i18n="hero_projects" href="#projetos">VER PROJETOS GERADOS <span>↓</span></a>
+<a class="button button-primary" data-i18n="hero_download" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer">DOWNLOAD QUANTIZADO <span>↗</span></a>
+<a class="text-link" data-i18n="hero_projects" href="#projetos">VER PROVAS FUNCIONAIS <span>↓</span></a>
 </div>
 </div>
 <div aria-hidden="true" class="hero-side-label left" data-i18n="hero_side_left">POST-TRAINED FOR CODE</div>
 <div aria-hidden="true" class="hero-side-label right" data-i18n="hero_side_right">RIO DE JANEIRO · BRASIL</div>
 <div class="hero-metrics reveal delay-2">
-<div><span data-i18n="metric_base_label">BASE</span><strong>LIQUID AI</strong></div>
-<div><span data-i18n="metric_focus_label">FOCO</span><strong data-i18n="metric_focus_value">100% CODE</strong></div>
-<div><span data-i18n="metric_exec_label">EXECUÇÃO</span><strong data-i18n="metric_exec_value">LOCAL</strong></div>
+<div><span data-i18n="metric_base_label">BASE</span><strong>unsloth/LFM2.5-8B-A1B</strong></div>
+<div><span data-i18n="metric_focus_label">POST-TRAINING</span><strong data-i18n="metric_focus_value">95% CODE · 5% LANGUAGE</strong></div>
+<div><span data-i18n="metric_exec_label">STATUS</span><strong data-i18n="metric_exec_value">AVAILABLE · QUANTIZED</strong></div>
 </div>
 <a aria-label="Rolar para o conteúdo" class="scroll-indicator" data-i18n-aria-label="aria_scroll" href="#modelo"><span></span></a>
 </section>
@@ -58,17 +58,17 @@
 <h2 data-i18n="intro_title">Menos chatbot.<br/><em>Mais ferramenta.</em></h2>
 </div>
 <div class="intro-copy reveal delay-1">
-<p data-i18n="intro_p1">VELUM parte de um modelo base da <strong>Liquid AI</strong> com 8 bilhões de parâmetros totais e aproximadamente 1 bilhão ativo durante a inferência.</p>
-<p data-i18n="intro_p2">O trabalho do VELUM está no <strong>fine-tuning e post-training especializado em código</strong>: geração de projetos, debugging, refatoração, raciocínio sobre software e criação de experiências executáveis.</p>
-<div class="quote" data-i18n="intro_quote">“Quanto você consegue extrair de um modelo compacto quando para de pedir para ele fazer tudo e ensina ele a fazer uma coisa muito bem?”</div>
+<p data-i18n="intro_p1">VELUM Coder é um post-training especializado sobre <strong>unsloth/LFM2.5-8B-A1B</strong>, com 8B parâmetros totais e ~1B ativos. O modelo base já entrega a arquitetura eficiente; o VELUM concentra a especialização.</p>
+<p data-i18n="intro_p2">O post-training foi deliberadamente agressivo: aproximadamente <strong>95% do material de especialização é código</strong> e 5% linguagem natural, o suficiente para preservar comunicação sem empurrar o modelo de volta para conversa genérica.</p>
+<div class="quote" data-i18n="intro_quote">VELUM não foi otimizado para conversa casual. Ele foi otimizado para escrever, entender, corrigir e montar software.</div>
 </div>
 </div>
 </section>
 <section aria-label="Especificações rápidas" class="stats-strip">
 <div class="stat-card reveal"><span data-i18n="stat_total_label">PARÂMETROS TOTAIS</span><strong>8B</strong><small data-i18n="stat_total_small">capacidade disponível</small></div>
 <div class="stat-card reveal delay-1"><span data-i18n="stat_active_label">ATIVOS</span><strong>~1B</strong><small data-i18n="stat_active_small">por inferência</small></div>
-<div class="stat-card reveal delay-2"><span data-i18n="stat_spec_label">ESPECIALIZAÇÃO</span><strong>CODE</strong><small data-i18n="stat_spec_small">post-training dedicado</small></div>
-<div class="stat-card reveal delay-3"><span data-i18n="stat_phil_label">FILOSOFIA</span><strong>LOCAL</strong><small data-i18n="stat_phil_small">na sua máquina</small></div>
+<div class="stat-card reveal delay-2"><span data-i18n="stat_spec_label">POST-TRAINING</span><strong>95%</strong><small data-i18n="stat_spec_small">conteúdo focado em código</small></div>
+<div class="stat-card reveal delay-3"><span data-i18n="stat_phil_label">RELEASE</span><strong>READY</strong><small data-i18n="stat_phil_small">quantizado no Hugging Face</small></div>
 </section>
 <section class="section architecture" id="arquitetura">
 <div class="section-label" data-i18n="sec_arch">02 / ARQUITETURA</div>
@@ -76,11 +76,11 @@
 <div class="arch-copy reveal">
 <p class="eyebrow" data-i18n="arch_p">8B DISPONÍVEIS. ~1B TRABALHANDO.</p>
 <h2 data-i18n="arch_title">Capacidade sem<br/>força bruta.</h2>
-<p>A base eficiente permite separar capacidade total de custo ativo. O VELUM preserva essa característica e direciona sua especialização para desenvolvimento de software.</p>
+<p data-i18n="arch_p">A eficiência vem da base <strong>LFM2.5-8B-A1B</strong>. O VELUM não reivindica a arquitetura original: ele adiciona uma camada de especialização por fine-tuning e post-training focada em desenvolvimento de software.</p>
 <ul class="feature-list">
-<li><span>01</span><div><strong data-i18n="feat1_title">Local-first</strong><p data-i18n="feat1_p">Projetado para viver perto do editor, do terminal e do seu código.</p></div></li>
-<li><span>02</span><div><strong data-i18n="feat2_title">Code-focused</strong><p data-i18n="feat2_p">Comportamento pós-treinado para entender e construir software.</p></div></li>
-<li><span>03</span><div><strong data-i18n="feat3_title">Eficiente</strong><p data-i18n="feat3_p">Menos compute ativo sem transformar capacidade em enfeite de marketing.</p></div></li>
+<li><span>01</span><div><strong data-i18n="feat1_title">Base eficiente</strong><p data-i18n="feat1_p">8B totais e ~1B ativos herdados do LFM2.5-8B-A1B.</p></div></li>
+<li><span>02</span><div><strong data-i18n="feat2_title">Post-training extremo</strong><p data-i18n="feat2_p">95% código, 5% linguagem natural para preservar instrução e comunicação.</p></div></li>
+<li><span>03</span><div><strong data-i18n="feat3_title">Draft model</strong><p data-i18n="feat3_p">LFM2.5-230M usado como draft model no stack de inferência.</p></div></li>
 </ul>
 </div>
 <div aria-label="Fluxo conceitual da arquitetura" class="arch-visual reveal delay-1">
@@ -128,22 +128,22 @@
 <div class="projects-head reveal">
 <div>
 <p class="eyebrow" data-i18n="projects_eyebrow">FROM PROMPT TO RUNNING CODE.</p>
-<h2 data-i18n="projects_title">Não mostre só<br/>benchmarks.</h2>
+<h2 data-i18n="projects_title">Código que<br/>realmente roda.</h2>
 </div>
-<p data-i18n="projects_p">Mostre o que o modelo consegue construir. Estes experimentos testam geração de interface, lógica, interação e cenas executáveis no navegador.</p>
+<p data-i18n="projects_p">Sem benchmark sintético por enquanto. Em vez de esconder isso, mostramos avaliações funcionais: projetos completos gerados pelo modelo e executáveis diretamente no navegador.</p>
 </div>
 <div class="project-grid">
 <article class="project-card project-tall reveal">
 <div class="project-media"><img alt="Flappy Bird gerado" data-i18n-alt="alt_flappy" loading="lazy" src="./assets/projects/flappy.png"/></div>
-<div class="project-info"><span data-i18n="proj1_type">01 / BROWSER GAME</span><h3>Flappy Bird</h3><p data-i18n="proj1_p">Game loop, obstáculos, colisão, score, animações e interface.</p><div class="tags"><b>HTML</b><b>CSS</b><b>JS</b></div></div>
+<div class="project-info"><span data-i18n="proj1_type">01 / BROWSER GAME</span><h3>Flappy Bird</h3><p data-i18n="proj1_p">Game loop, obstáculos, colisão, score, animações e interface.</p><div class="tags"><b>HTML</b><b>CSS</b><b>JS</b></div><button class="demo-launch" data-demo="./demos/flappybird.html" data-i18n="try_demo">TESTAR NO NAVEGADOR ↗</button></div>
 </article>
 <article class="project-card reveal delay-1">
 <div class="project-media"><img alt="Bonsai Voxel 3D gerado" data-i18n-alt="alt_bonsai" loading="lazy" src="./assets/projects/bonsai.png"/></div>
-<div class="project-info"><span data-i18n="proj2_type">02 / THREE.JS</span><h3>Bonsai Voxel</h3><p data-i18n="proj2_p">Cena 3D, voxels, câmera orbital, interação e partículas.</p><div class="tags"><b>THREE.JS</b><b>WEBGL</b><b>3D</b></div></div>
+<div class="project-info"><span data-i18n="proj2_type">02 / THREE.JS</span><h3>Bonsai Voxel</h3><p data-i18n="proj2_p">Cena 3D, voxels, câmera orbital, interação e partículas.</p><div class="tags"><b>THREE.JS</b><b>WEBGL</b><b>3D</b></div><button class="demo-launch" data-demo="./demos/bonsai.html" data-i18n="try_demo">TESTAR NO NAVEGADOR ↗</button></div>
 </article>
 <article class="project-card reveal delay-2">
 <div class="project-media"><img alt="Railway Rush gerado" data-i18n-alt="alt_railway" loading="lazy" src="./assets/projects/railway.png"/></div>
-<div class="project-info"><span data-i18n="proj3_type">03 / GAMEPLAY</span><h3>Railway Rush</h3><p data-i18n="proj3_p">Corrida 3D com câmera de perseguição, pista, trem e collectibles.</p><div class="tags"><b>THREE.JS</b><b>PHYSICS</b><b>GAME</b></div></div>
+<div class="project-info"><span data-i18n="proj3_type">03 / GAMEPLAY</span><h3>Railway Rush</h3><p data-i18n="proj3_p">Corrida 3D com câmera de perseguição, pista, trem e collectibles.</p><div class="tags"><b>THREE.JS</b><b>PHYSICS</b><b>GAME</b></div><button class="demo-launch" data-demo="./demos/railway-rush.html" data-i18n="try_demo">TESTAR NO NAVEGADOR ↗</button></div>
 </article>
 </div>
 </section>
@@ -182,25 +182,56 @@
 </div>
 </div>
 </section>
-<section class="section roadmap" id="roadmap">
-<div class="section-label" data-i18n="sec_roadmap">06 / ROADMAP</div>
-<div class="roadmap-head reveal"><p class="eyebrow" data-i18n="road_eyebrow">EXPERIMENTAL. MENSURÁVEL. ABERTO A ITERAÇÃO.</p><h2 data-i18n="road_title">O que vem agora.</h2></div>
-<div class="roadmap-list">
-<div class="road-item reveal"><span>01</span><strong>Post-training</strong><p data-i18n="road1_p">Expandir e refinar dados especializados em código.</p><b class="status active" data-i18n="road1_status">EM DESENVOLVIMENTO</b></div>
-<div class="road-item reveal delay-1"><span>02</span><strong>Benchmarks</strong><p data-i18n="road2_p">HumanEval, MBPP, throughput, TTFT e memória real.</p><b class="status" data-i18n="road2_status">PRÓXIMO</b></div>
-<div class="road-item reveal delay-2"><span>03</span><strong>Quantização</strong><p data-i18n="road3_p">Explorar Q8, Q6, Q5 e Q4 para hardware local.</p><b class="status" data-i18n="road3_status">PLANEJADO</b></div>
-<div class="road-item reveal delay-3"><span>04</span><strong>Release</strong><p data-i18n="road4_p">Checkpoint, documentação e integração local.</p><b class="status" data-i18n="road4_status">PLANEJADO</b></div>
-</div>
-<p class="road-note" data-i18n="road_note">Sem números mágicos antes de medir. A internet já possui benchmark inventado suficiente para várias gerações.</p>
+
+<section class="section roadmap release-section" id="download">
+  <div class="section-label" data-i18n="sec_release">06 / RELEASE</div>
+  <div class="roadmap-head reveal">
+    <p class="eyebrow" data-i18n="release_eyebrow">AVAILABLE NOW · QUANTIZED · HUGGING FACE</p>
+    <h2 data-i18n="release_title">Já está<br/>disponível.</h2>
+  </div>
+
+  <div class="release-grid">
+    <div class="release-card reveal">
+      <span class="release-kicker" data-i18n="release_model_label">MODELO</span>
+      <h3>VELUM-Coder</h3>
+      <p data-i18n="release_model_p">Baixe as versões quantizadas diretamente no Hugging Face e rode localmente no seu próprio stack.</p>
+      <a class="button button-primary" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer" data-i18n="hf_cta">ABRIR NO HUGGING FACE ↗</a>
+    </div>
+
+    <div class="release-card reveal delay-1">
+      <span class="release-kicker" data-i18n="release_stack_label">STACK</span>
+      <table class="spec-table">
+        <tr><th data-i18n="spec_base">Base model</th><td><code>unsloth/LFM2.5-8B-A1B</code></td></tr>
+        <tr><th data-i18n="spec_draft">Draft model</th><td><code>LFM2.5-230M</code></td></tr>
+        <tr><th data-i18n="spec_params">Parâmetros</th><td>8B total · ~1B active</td></tr>
+        <tr><th data-i18n="spec_training">Post-training</th><td>95% code · 5% language</td></tr>
+        <tr><th data-i18n="spec_use">Uso</th><td data-i18n="spec_use_value">Código / desenvolvimento de software</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="benchmark-note reveal">
+    <div>
+      <span data-i18n="bench_label">SOBRE BENCHMARKS</span>
+      <h3 data-i18n="bench_title">Ainda não tem uma tabela bonita de números. De propósito.</h3>
+    </div>
+    <p data-i18n="bench_p">O orçamento de compute foi priorizado no treinamento e post-training na H100. Ainda não rodei uma bateria padronizada completa como HumanEval/MBPP com metodologia reproduzível. Em vez de preencher a página com números parciais, esta release mostra avaliações funcionais e projetos executáveis. Eles demonstram capacidade prática, mas não substituem benchmarks padronizados.</p>
+  </div>
+
+  <div class="release-policy reveal">
+    <span data-i18n="policy_label">O QUE É PUBLICADO</span>
+    <p data-i18n="policy_p">A distribuição pública é do modelo quantizado. Dataset de treinamento, pipeline de treinamento e outros artefatos internos não fazem parte desta release.</p>
+  </div>
 </section>
+
 <section class="final-cta">
 <div aria-hidden="true" class="final-bg"></div>
 <div class="final-copy reveal">
 <span class="eyebrow" data-i18n="final_eyebrow">VELUM / BRAZIL</span>
 <h2 data-i18n="final_title">Inteligência<br/>que fica perto.</h2>
-<p data-i18n="final_p">Local. Especializada. Feita para quem constrói.</p>
+<p data-i18n="final_p">Baixe. Rode localmente. Aponte para código.</p>
 <div class="final-actions">
-<a class="button button-primary" href="https://github.com/guell00" rel="noreferrer" target="_blank">GITHUB <span>↗</span></a>
+<a class="button button-primary" href="https://huggingface.co/guell00/VELUM-Coder" rel="noreferrer" target="_blank">HUGGING FACE <span>↗</span></a>
 <a class="text-link" data-i18n="back_top" href="#top">VOLTAR AO TOPO <span>↑</span></a>
 </div>
 </div>
@@ -209,9 +240,20 @@
 </main>
 <footer>
 <span>VELUM © 2026</span>
-<span>8B TOTAL · ~1B ACTIVE · POST-TRAINED FOR CODE</span>
+<span>8B TOTAL · ~1B ACTIVE · 95% CODE POST-TRAINING</span>
 <span data-i18n="footer_place">RIO DE JANEIRO · BRASIL</span>
 </footer>
+
+<div class="demo-modal" id="demo-modal" aria-hidden="true">
+  <div class="demo-modal-shell">
+    <div class="demo-modal-bar">
+      <span>VELUM / FUNCTIONAL EVAL</span>
+      <button id="demo-close" aria-label="Fechar demo">FECHAR ×</button>
+    </div>
+    <iframe id="demo-frame" title="Demo gerada pelo VELUM" sandbox="allow-scripts allow-same-origin allow-pointer-lock"></iframe>
+  </div>
+</div>
+
 <script src="./script.js"></script>
 </body>
 </html>

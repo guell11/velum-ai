@@ -133,6 +133,138 @@ const translations = {
   }
 };
 
+
+// Release copy. Kept as overrides so the original i18n structure remains compact.
+Object.assign(translations['pt-BR'], {
+  title:'VELUM Coder — Local. Quantizado. Code-first.',
+  meta_description:'VELUM Coder — modelo 8B / ~1B ativo, quantizado, disponível e pós-treinado com foco extremo em código.',
+  nav_release:'DOWNLOAD', nav_cta:'BAIXAR NO HF ↗',
+  hero_desc:'Um modelo <strong>já disponível</strong>, quantizado e pós-treinado quase inteiramente para <strong>código.</strong><br>Local-first. Não é um chatbot. É uma ferramenta para construir software.',
+  hero_download:'DOWNLOAD QUANTIZADO <span>↗</span>', hero_projects:'VER PROVAS FUNCIONAIS <span>↓</span>',
+  metric_focus_label:'POST-TRAINING', metric_focus_value:'95% CODE · 5% LANGUAGE', metric_exec_label:'STATUS', metric_exec_value:'AVAILABLE · QUANTIZED',
+  intro_p1:'VELUM Coder é um post-training especializado sobre <strong>unsloth/LFM2.5-8B-A1B</strong>, com 8B parâmetros totais e ~1B ativos. A arquitetura eficiente vem do modelo base; o VELUM concentra a especialização.',
+  intro_p2:'O post-training foi deliberadamente agressivo: aproximadamente <strong>95% do material de especialização é código</strong> e 5% linguagem natural, para preservar instrução e comunicação sem transformar o modelo em um assistente de conversa.',
+  intro_quote:'VELUM não foi otimizado para conversa casual. Ele foi otimizado para escrever, entender, corrigir e montar software.',
+  stat_spec_label:'POST-TRAINING', stat_spec_small:'conteúdo focado em código', stat_phil_label:'RELEASE', stat_phil_small:'quantizado no Hugging Face',
+  arch_p:'A eficiência vem da base <strong>LFM2.5-8B-A1B</strong>. O VELUM não reivindica a arquitetura original: ele adiciona uma camada de especialização por fine-tuning e post-training focada em desenvolvimento de software.',
+  feat1_title:'Base eficiente', feat1_p:'8B totais e ~1B ativos herdados do LFM2.5-8B-A1B.',
+  feat2_title:'Post-training extremo', feat2_p:'95% código, 5% linguagem natural para preservar instrução e comunicação.',
+  feat3_title:'Draft model', feat3_p:'LFM2.5-230M usado como draft model no stack de inferência.',
+  projects_title:'Código que<br>realmente roda.', projects_p:'Sem benchmark sintético por enquanto. Em vez de esconder isso, mostramos avaliações funcionais: projetos completos gerados pelo modelo e executáveis diretamente no navegador.',
+  try_demo:'TESTAR NO NAVEGADOR ↗',
+  code_p:'A especialização privilegia geração de código, debugging, refatoração, implementação multi-etapa e criação de projetos. Conversa genérica não é o objetivo do modelo; linguagem natural existe para instruir o trabalho de código.',
+  sec_release:'06 / RELEASE', release_eyebrow:'AVAILABLE NOW · QUANTIZED · HUGGING FACE', release_title:'Já está<br>disponível.',
+  release_model_label:'MODELO', release_model_p:'Baixe as versões quantizadas diretamente no Hugging Face e rode localmente no seu próprio stack.', hf_cta:'ABRIR NO HUGGING FACE ↗',
+  release_stack_label:'STACK', spec_base:'Base model', spec_draft:'Draft model', spec_params:'Parâmetros', spec_training:'Post-training', spec_use:'Uso', spec_use_value:'Código / desenvolvimento de software',
+  bench_label:'SOBRE BENCHMARKS', bench_title:'Ainda não tem uma tabela bonita de números. De propósito.',
+  bench_p:'O orçamento de compute foi priorizado no treinamento e post-training na H100. Ainda não rodei uma bateria padronizada completa como HumanEval/MBPP com metodologia reproduzível. Em vez de preencher a página com números parciais, esta release mostra avaliações funcionais e projetos executáveis. Eles demonstram capacidade prática, mas não substituem benchmarks padronizados.',
+  policy_label:'O QUE É PUBLICADO', policy_p:'A distribuição pública é do modelo quantizado. Dataset de treinamento, pipeline de treinamento e outros artefatos internos não fazem parte desta release.',
+  final_p:'Baixe. Rode localmente. Aponte para código.'
+});
+
+Object.assign(translations['en'], {
+  title:'VELUM Coder — Local. Quantized. Code-first.',
+  meta_description:'VELUM Coder — available quantized 8B / ~1B active model, heavily post-trained for code.',
+  nav_release:'DOWNLOAD', nav_cta:'DOWNLOAD ON HF ↗',
+  hero_desc:'An <strong>available</strong>, quantized model post-trained almost entirely for <strong>code.</strong><br>Local-first. Not a chatbot. A tool for building software.',
+  hero_download:'DOWNLOAD QUANTIZED <span>↗</span>', hero_projects:'SEE FUNCTIONAL EVALS <span>↓</span>',
+  metric_focus_label:'POST-TRAINING', metric_focus_value:'95% CODE · 5% LANGUAGE', metric_exec_label:'STATUS', metric_exec_value:'AVAILABLE · QUANTIZED',
+  intro_p1:'VELUM Coder is a specialized post-training of <strong>unsloth/LFM2.5-8B-A1B</strong>, with 8B total parameters and ~1B active. The efficient architecture comes from the base model; VELUM is the specialization layer.',
+  intro_p2:'The post-training is intentionally aggressive: approximately <strong>95% code</strong> and 5% natural language, preserving instruction following and communication without turning the model back into a general chat assistant.',
+  intro_quote:'VELUM is not optimized for casual conversation. It is optimized to write, understand, fix and assemble software.',
+  stat_spec_label:'POST-TRAINING', stat_spec_small:'code-focused content', stat_phil_label:'RELEASE', stat_phil_small:'quantized on Hugging Face',
+  arch_p:'Efficiency comes from the <strong>LFM2.5-8B-A1B</strong> base. VELUM does not claim the original architecture; it adds code-focused fine-tuning and post-training.',
+  feat1_title:'Efficient base', feat1_p:'8B total and ~1B active inherited from LFM2.5-8B-A1B.',
+  feat2_title:'Extreme post-training', feat2_p:'95% code, 5% natural language to preserve instruction and communication.',
+  feat3_title:'Draft model', feat3_p:'LFM2.5-230M used as the draft model in the inference stack.',
+  projects_title:'Code that<br>actually runs.', projects_p:'No synthetic benchmark table yet. Instead, these are functional evaluations: complete generated projects that can run directly in the browser.',
+  try_demo:'TRY IN BROWSER ↗',
+  code_p:'Specialization prioritizes code generation, debugging, refactoring, multi-step implementation and project creation. General chat is not the model’s target; natural language exists to direct code work.',
+  sec_release:'06 / RELEASE', release_eyebrow:'AVAILABLE NOW · QUANTIZED · HUGGING FACE', release_title:'Available<br>now.',
+  release_model_label:'MODEL', release_model_p:'Download quantized builds directly from Hugging Face and run them locally in your own stack.', hf_cta:'OPEN ON HUGGING FACE ↗',
+  release_stack_label:'STACK', spec_base:'Base model', spec_draft:'Draft model', spec_params:'Parameters', spec_training:'Post-training', spec_use:'Use', spec_use_value:'Code / software development',
+  bench_label:'ABOUT BENCHMARKS', bench_title:'There is no pretty benchmark table yet. Intentionally.',
+  bench_p:'Compute budget was prioritized for training and post-training on H100. I have not yet run a complete standardized suite such as HumanEval/MBPP with a reproducible methodology. Rather than publish partial numbers, this release shows functional evaluations and executable projects. They demonstrate practical capability, but they do not replace standardized benchmarks.',
+  policy_label:'WHAT IS RELEASED', policy_p:'The public distribution is the quantized model. Training datasets, training pipeline and other internal artifacts are not part of this release.',
+  final_p:'Download it. Run it locally. Point it at code.'
+});
+
+Object.assign(translations['es'], {
+  nav_release:'DESCARGA', nav_cta:'DESCARGAR EN HF ↗',
+  hero_desc:'Un modelo <strong>ya disponible</strong>, cuantizado y post-entrenado casi por completo para <strong>código.</strong><br>Local-first. No es un chatbot. Es una herramienta para construir software.',
+  hero_download:'DESCARGAR CUANTIZADO <span>↗</span>', hero_projects:'VER EVALUACIONES FUNCIONALES <span>↓</span>',
+  metric_focus_label:'POST-TRAINING', metric_focus_value:'95% CÓDIGO · 5% LENGUAJE', metric_exec_label:'ESTADO', metric_exec_value:'DISPONIBLE · CUANTIZADO',
+  intro_p1:'VELUM Coder es un post-training especializado sobre <strong>unsloth/LFM2.5-8B-A1B</strong>, con 8B parámetros totales y ~1B activos. La arquitectura eficiente viene del modelo base; VELUM aporta la especialización.',
+  intro_p2:'El post-training es deliberadamente agresivo: aproximadamente <strong>95% código</strong> y 5% lenguaje natural, suficiente para conservar instrucciones y comunicación sin volverlo un asistente de conversación.',
+  intro_quote:'VELUM no está optimizado para conversación casual. Está optimizado para escribir, entender, corregir y montar software.',
+  stat_spec_label:'POST-TRAINING', stat_spec_small:'contenido centrado en código', stat_phil_label:'RELEASE', stat_phil_small:'cuantizado en Hugging Face',
+  arch_p:'La eficiencia proviene de la base <strong>LFM2.5-8B-A1B</strong>. VELUM no reclama la arquitectura original; añade fine-tuning y post-training centrados en código.',
+  feat1_title:'Base eficiente', feat1_p:'8B totales y ~1B activos heredados de LFM2.5-8B-A1B.',
+  feat2_title:'Post-training extremo', feat2_p:'95% código y 5% lenguaje natural para conservar instrucciones y comunicación.',
+  feat3_title:'Draft model', feat3_p:'LFM2.5-230M usado como draft model en el stack de inferencia.',
+  projects_title:'Código que<br>realmente funciona.', projects_p:'Todavía no hay una tabla de benchmarks sintéticos. En su lugar mostramos evaluaciones funcionales: proyectos completos generados y ejecutables en el navegador.',
+  try_demo:'PROBAR EN EL NAVEGADOR ↗',
+  code_p:'La especialización prioriza generación de código, debugging, refactorización, implementación multi-etapa y creación de proyectos. La conversación general no es el objetivo.',
+  sec_release:'06 / RELEASE', release_eyebrow:'DISPONIBLE · CUANTIZADO · HUGGING FACE', release_title:'Disponible<br>ahora.',
+  release_model_label:'MODELO', release_model_p:'Descarga las versiones cuantizadas desde Hugging Face y ejecútalas localmente.', hf_cta:'ABRIR EN HUGGING FACE ↗',
+  release_stack_label:'STACK', spec_base:'Modelo base', spec_draft:'Draft model', spec_params:'Parámetros', spec_training:'Post-training', spec_use:'Uso', spec_use_value:'Código / desarrollo de software',
+  bench_label:'SOBRE BENCHMARKS', bench_title:'Aún no hay una bonita tabla de números. A propósito.',
+  bench_p:'El presupuesto de cómputo se priorizó para training y post-training en H100. Todavía no ejecuté una suite completa como HumanEval/MBPP con metodología reproducible. En vez de publicar números parciales, esta release muestra evaluaciones funcionales y proyectos ejecutables. No sustituyen benchmarks estandarizados.',
+  policy_label:'QUÉ SE PUBLICA', policy_p:'La distribución pública incluye el modelo cuantizado. Dataset de entrenamiento, pipeline y otros artefactos internos no forman parte de esta release.',
+  final_p:'Descárgalo. Ejecútalo localmente. Apúntalo al código.'
+});
+
+Object.assign(translations['it'], {
+  nav_release:'DOWNLOAD', nav_cta:'SCARICA SU HF ↗',
+  hero_desc:'Un modello <strong>già disponibile</strong>, quantizzato e post-addestrato quasi interamente per il <strong>codice.</strong><br>Local-first. Non è un chatbot. È uno strumento per costruire software.',
+  hero_download:'SCARICA QUANTIZZATO <span>↗</span>', hero_projects:'VEDI VALUTAZIONI FUNZIONALI <span>↓</span>',
+  metric_focus_label:'POST-TRAINING', metric_focus_value:'95% CODICE · 5% LINGUA', metric_exec_label:'STATO', metric_exec_value:'DISPONIBILE · QUANTIZZATO',
+  intro_p1:'VELUM Coder è un post-training specializzato di <strong>unsloth/LFM2.5-8B-A1B</strong>, con 8B parametri totali e ~1B attivi. L’architettura efficiente viene dal modello base; VELUM aggiunge la specializzazione.',
+  intro_p2:'Il post-training è intenzionalmente aggressivo: circa <strong>95% codice</strong> e 5% linguaggio naturale, per conservare istruzioni e comunicazione senza trasformarlo in un assistente generalista.',
+  intro_quote:'VELUM non è ottimizzato per la conversazione casuale. È ottimizzato per scrivere, capire, correggere e assemblare software.',
+  stat_spec_label:'POST-TRAINING', stat_spec_small:'contenuti focalizzati sul codice', stat_phil_label:'RELEASE', stat_phil_small:'quantizzato su Hugging Face',
+  arch_p:'L’efficienza deriva dalla base <strong>LFM2.5-8B-A1B</strong>. VELUM non rivendica l’architettura originale; aggiunge fine-tuning e post-training focalizzati sul codice.',
+  feat1_title:'Base efficiente', feat1_p:'8B totali e ~1B attivi ereditati da LFM2.5-8B-A1B.',
+  feat2_title:'Post-training estremo', feat2_p:'95% codice, 5% linguaggio naturale per preservare istruzioni e comunicazione.',
+  feat3_title:'Draft model', feat3_p:'LFM2.5-230M usato come draft model nello stack di inferenza.',
+  projects_title:'Codice che<br>funziona davvero.', projects_p:'Per ora niente tabella di benchmark sintetici. Mostriamo invece valutazioni funzionali: progetti completi generati ed eseguibili nel browser.',
+  try_demo:'PROVA NEL BROWSER ↗',
+  code_p:'La specializzazione privilegia generazione di codice, debugging, refactoring, implementazioni multi-step e creazione di progetti. La chat generalista non è l’obiettivo.',
+  sec_release:'06 / RELEASE', release_eyebrow:'DISPONIBILE · QUANTIZZATO · HUGGING FACE', release_title:'Disponibile<br>ora.',
+  release_model_label:'MODELLO', release_model_p:'Scarica le versioni quantizzate da Hugging Face ed eseguile localmente nel tuo stack.', hf_cta:'APRI SU HUGGING FACE ↗',
+  release_stack_label:'STACK', spec_base:'Modello base', spec_draft:'Draft model', spec_params:'Parametri', spec_training:'Post-training', spec_use:'Uso', spec_use_value:'Codice / sviluppo software',
+  bench_label:'SUI BENCHMARK', bench_title:'Non c’è ancora una bella tabella di numeri. Volutamente.',
+  bench_p:'Il budget di compute è stato prioritizzato per training e post-training su H100. Non ho ancora eseguito una suite completa come HumanEval/MBPP con metodologia riproducibile. Invece di pubblicare numeri parziali, questa release mostra valutazioni funzionali e progetti eseguibili. Non sostituiscono benchmark standardizzati.',
+  policy_label:'COSA VIENE PUBBLICATO', policy_p:'La distribuzione pubblica comprende il modello quantizzato. Dataset di training, pipeline e altri artefatti interni non fanno parte di questa release.',
+  final_p:'Scaricalo. Eseguilo localmente. Dagli del codice.'
+});
+
+Object.assign(translations['zh-CN'], {
+  nav_release:'下载', nav_cta:'在 HF 下载 ↗',
+  hero_desc:'一个<strong>已经发布</strong>、已量化、几乎完全针对<strong>代码</strong>进行后训练的模型。<br>本地优先。不是聊天机器人，而是构建软件的工具。',
+  hero_download:'下载量化模型 <span>↗</span>', hero_projects:'查看功能评测 <span>↓</span>',
+  metric_focus_label:'后训练', metric_focus_value:'95% 代码 · 5% 语言', metric_exec_label:'状态', metric_exec_value:'已发布 · 已量化',
+  intro_p1:'VELUM Coder 基于 <strong>unsloth/LFM2.5-8B-A1B</strong> 进行专项后训练，总参数 8B、约 1B 激活。高效架构来自基础模型，VELUM 的工作重点是代码专业化。',
+  intro_p2:'后训练刻意高度偏向代码：约 <strong>95% 代码</strong>、5% 自然语言，用于保持指令理解和基本沟通，而不是把模型重新训练成通用聊天助手。',
+  intro_quote:'VELUM 不针对闲聊优化。它针对编写、理解、修复和组装软件优化。',
+  stat_spec_label:'后训练', stat_spec_small:'代码导向内容', stat_phil_label:'发布', stat_phil_small:'Hugging Face 已量化',
+  arch_p:'效率来自 <strong>LFM2.5-8B-A1B</strong> 基础。VELUM 不声称拥有原始架构，而是在其上进行代码导向的微调与后训练。',
+  feat1_title:'高效基础', feat1_p:'继承 LFM2.5-8B-A1B 的 8B 总参数与约 1B 激活参数。',
+  feat2_title:'极致代码后训练', feat2_p:'95% 代码，5% 自然语言，用于保持指令理解与沟通。',
+  feat3_title:'Draft model', feat3_p:'推理栈使用 LFM2.5-230M 作为 draft model。',
+  projects_title:'真正能运行的<br>代码。', projects_p:'目前没有漂亮的合成 benchmark 表格。这里展示的是功能评测：由模型生成并可直接在浏览器运行的完整项目。',
+  try_demo:'在浏览器中体验 ↗',
+  code_p:'专项训练重点是代码生成、调试、重构、多步骤实现与项目创建。通用聊天不是目标，自然语言主要用于指导代码任务。',
+  sec_release:'06 / 发布', release_eyebrow:'现已发布 · 已量化 · HUGGING FACE', release_title:'现在<br>即可使用。',
+  release_model_label:'模型', release_model_p:'直接从 Hugging Face 下载量化版本，并在自己的本地推理栈运行。', hf_cta:'打开 HUGGING FACE ↗',
+  release_stack_label:'技术栈', spec_base:'基础模型', spec_draft:'Draft model', spec_params:'参数', spec_training:'后训练', spec_use:'用途', spec_use_value:'代码 / 软件开发',
+  bench_label:'关于 BENCHMARK', bench_title:'暂时没有漂亮的数字表。这是有意的。',
+  bench_p:'计算预算优先投入 H100 上的训练与后训练。目前还没有使用可复现方法完整运行 HumanEval/MBPP 等标准套件。与其发布零散数字，本次发布展示功能评测与可执行项目。它们证明实际能力，但不能替代标准 benchmark。',
+  policy_label:'公开内容', policy_p:'公开发布的是量化模型。训练数据集、训练 pipeline 以及其他内部产物不在本次发布范围内。',
+  final_p:'下载。本地运行。把代码交给它。'
+});
+
+
 const languageSelect = document.getElementById('language-select');
 let currentLanguage = 'pt-BR';
 
@@ -257,4 +389,36 @@ document.querySelectorAll('.video-toggle').forEach((button) => {
       button.setAttribute('aria-label', t.aria_video_play);
     }
   });
+});
+
+
+// Playable functional evaluations.
+const demoModal = document.getElementById('demo-modal');
+const demoFrame = document.getElementById('demo-frame');
+const demoClose = document.getElementById('demo-close');
+
+function closeDemo() {
+  if (!demoModal || !demoFrame) return;
+  demoModal.classList.remove('open');
+  demoModal.setAttribute('aria-hidden', 'true');
+  demoFrame.src = 'about:blank';
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.demo-launch').forEach((button) => {
+  button.addEventListener('click', () => {
+    if (!demoModal || !demoFrame) return;
+    demoFrame.src = button.dataset.demo;
+    demoModal.classList.add('open');
+    demoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+demoClose?.addEventListener('click', closeDemo);
+demoModal?.addEventListener('click', (event) => {
+  if (event.target === demoModal) closeDemo();
+});
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeDemo();
 });

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flappy Bird</title>
+  <style>
+    /* ## ah , espera deixa eu parar para pensar, preciso zerar todas as margens e paddings nativos para garantir que os cálculos de colisão não sofram com offset imprevisível */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* ## ah , espera deixa eu parar para pensar, o canvas precisa centralizar perfeitamente no viewport com fundo neutro sem criar scrollbar horizontal */
+    body {
+      background: radial-gradient(circle at center, #020617 0%, #000000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+
+    /* ## ah , espera deixa eu parar para pensar, o container deve ter proporção 9:16 nativa e usar transform scale para caber em qualquer monitor sem perder nitidez */
+    #game-container {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      transform-origin: center center;
+      background: linear-gradient(180deg, #0369a1 0%, #38bdf8 45%, #bae6fd 80%, #e0f2fe 100%);
+      border-radius: 54px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px -20px rgba(0,0,0,0.9), 0 0 0 8px rgba(255,255,255,0.15);
+    }
+
+    .sun-wrap {
+      position: absolute;
+      top: 100px;
+      right: 120px;
+      width: 220px;
+      height: 220px;
+      z-index: 1;
+    }
+    .sun-glow {
+      animation: pulseGlow 4s infinite alternate ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(1); opacity: 0.85; }
+      100% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .clouds-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .cloud {
+      position: absolute;
+      animation: floatCloud linear infinite;
+    }
+    @keyframes floatCloud {
+      from { transform: translateX(1200px); }
+      to { transform: translateX(-500px); }
+    }
+
+    .mountains {
+      position: absolute;
+      bottom: 240px;
+      left: 0;
+      width: 100%;
+      height: 440px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* ## ah , espera deixa eu parar para pensar, o teto com espinhos precisa ser alto o bastante para servir de obstáculo letal visível */
+    #ceiling-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 75px;
+      z-index: 12;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+    }
+
+    /* ## ah , espera deixa eu parar para pensar, o chão precisa ter altura proporcional de 240px com textura e camada de grama */
+    #ground-wrap {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 240px;
+      z-index: 12;
+      box-shadow: 0 -12px 30px rgba(0,0,0,0.35);
+    }
+
+    #pipes-container {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .pipe {
+      position: absolute;
+      width: 190px;
+      filter: drop-shadow(10px 0 20px rgba(0, 0, 0, 0.35));
+    }
+
+    /* ## ah , espera deixa eu parar para pensar, a rotação do pássaro deve usar o ponto central exato (50% 50%) para ele inclinar e mergulhar sem deslocar de eixo */
+    #bird {
+      position: absolute;
+      width: 130px;
+      height: 95px;
+      left: 240px;
+      top: 800px;
+      z-index: 10;
+      transform-origin: 50% 50%;
+      filter: drop-shadow(0 14px 18px rgba(0,0,0,0.35));
+      transition: transform 0.05s cubic-bezier(0.1, 0.8, 0.3, 1);
+    }
+    .wing {
+      transform-origin: 22px 28px;
+      animation: wingFlap 0.2s infinite alternate ease-in-out;
+    }
+    @keyframes wingFlap {
+      0% { transform: rotate(-25deg); }
+      100% { transform: rotate(30deg); }
+    }
+
+    .feather {
+      position: absolute;
+      width: 22px;
+      height: 14px;
+      background: #fde047;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9;
+      opacity: 0.95;
+      transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    }
+
+    #score-box {
+      position: absolute;
+      top: 110px;
+      width: 100%;
+      text-align: center;
+      font-size: 9.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      -webkit-text-stroke: 8px #0f172a;
+      text-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      z-index: 15;
+      letter-spacing: 4px;
+    }
+
+    #flash {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+      transition: opacity 0.15s ease-out;
+    }
+
+    /* ## ah , espera deixa eu parar para pensar, a UI precisa usar glassmorphism escuro para destacar o card branco em cima da cena */
+    #ui {
+      position: absolute;
+      inset: 0;
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+    .card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(241,245,249,0.92));
+      border: 6px solid #ffffff;
+      border-radius: 54px;
+      padding: 70px 90px;
+      text-align: center;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 4px 8px rgba(255,255,255,0.9);
+      width: 780px;
+      animation: floatUI 3s infinite alternate ease-in-out;
+    }
+    @keyframes floatUI {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-16px); }
+    }
+    .card h1 {
+      font-size: 5.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+    .card p {
+      color: #334155;
+      font-size: 2.3rem;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      margin: 45px 0 25px;
+      gap: 30px;
+    }
+    .stat-pill {
+      background: #e2e8f0;
+      padding: 20px 45px;
+      border-radius: 28px;
+      border: 3px solid #cbd5e1;
+      flex: 1;
+    }
+    .stat-pill span {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    .stat-pill strong {
+      font-size: 3.8rem;
+      color: #0f172a;
+      font-weight: 900;
+    }
+    .btn-hint {
+      margin-top: 30px;
+      display: inline-block;
+      background: #f97316;
+      color: #ffffff;
+      font-weight: 900;
+      padding: 24px 60px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(249, 115, 22, 0.45);
+      font-size: 2.2rem;
+    }
+    .hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  </style>
+</head>
+<body>
+
+<div id="game-container">
+  <div id="flash"></div>
+
+  <!-- Sol -->
+  <div class="sun-wrap">
+    <svg viewBox="0 0 100 100" class="sun-glow" width="100%" height="100%">
+      <defs>
+        <radialGradient id="sun-core" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fffbeb"/>
+          <stop offset="30%" stop-color="#fef08a"/>
+          <stop offset="70%" stop-color="#fde047" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#facc15" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="50" cy="50" r="48" fill="url(#sun-core)"/>
+      <circle cx="50" cy="50" r="22" fill="#ffffff" opacity="0.95"/>
+    </svg>
+  </div>
+
+  <!-- Nuvens -->
+  <div class="clouds-layer">
+    <svg class="cloud" style="top: 160px; width: 380px; opacity: 0.45; animation-duration: 36s;" viewBox="0 0 160 80">
+      <path fill="#ffffff" d="M 20,60 C 10,60 0,52 0,40 C 0,28 12,20 25,20 C 30,8 48,0 70,0 C 95,0 115,10 120,25 C 135,22 155,30 155,45 C 155,58 142,60 130,60 Z"/>
+    </svg>
+    <svg class="cloud" style="top: 420px; width: 280px; opacity: 0.5; animation-duration: 28s; animation-delay: -12s;" viewBox="0 0 160 80">
+      <path fill="#ffffff" d="M 20,60 C 10,60 0,52 0,40 C 0,28 12,20 25,20 C 30,8 48,0 70,0 C 95,0 115,10 120,25 C 135,22 155,30 155,45 C 155,58 142,60 130,60 Z"/>
+    </svg>
+    <svg class="cloud" style="top: 260px; width: 340px; opacity: 0.85; animation-duration: 20s; animation-delay: -5s;" viewBox="0 0 160 80">
+      <path fill="#ffffff" filter="drop-shadow(0 8px 12px rgba(0,0,0,0.08))" d="M 20,60 C 10,60 0,52 0,40 C 0,28 12,20 25,20 C 30,8 48,0 70,0 C 95,0 115,10 120,25 C 135,22 155,30 155,45 C 155,58 142,60 130,60 Z"/>
+    </svg>
+    <svg class="cloud" style="top: 620px; width: 240px; opacity: 0.8; animation-duration: 16s; animation-delay: -9s;" viewBox="0 0 160 80">
+      <path fill="#ffffff" filter="drop-shadow(0 8px 12px rgba(0,0,0,0.08))" d="M 20,60 C 10,60 0,52 0,40 C 0,28 12,20 25,20 C 30,8 48,0 70,0 C 95,0 115,10 120,25 C 135,22 155,30 155,45 C 155,58 142,60 130,60 Z"/>
+    </svg>
+  </div>
+
+  <!-- Montanhas -->
+  <svg class="mountains" viewBox="0 0 1080 440" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="hill-back" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.25"/>
+      </linearGradient>
+      <linearGradient id="hill-front" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#86efac" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#4ade80" stop-opacity="0.4"/>
+      </linearGradient>
+    </defs>
+    <path d="M0,440 L0,220 C180,100 320,100 480,210 C640,320 880,120 1080,180 L1080,440 Z" fill="url(#hill-back)"/>
+    <path d="M0,440 L0,280 C220,160 380,180 560,270 C740,360 920,240 1080,260 L1080,440 Z" fill="url(#hill-front)"/>
+  </svg>
+
+  <!-- Teto -->
+  <div id="ceiling-wrap">
+    <svg width="100%" height="100%" viewBox="0 0 1080 75" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="metal-beam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#475569"/>
+          <stop offset="50%" stop-color="#1e293b"/>
+          <stop offset="100%" stop-color="#0f172a"/>
+        </linearGradient>
+        <linearGradient id="spike-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#dc2626"/>
+          <stop offset="100%" stop-color="#7f1d1d"/>
+        </linearGradient>
+      </defs>
+      <rect width="1080" height="32" fill="url(#metal-beam)"/>
+      <path d="
+        M0,32 L27,70 L54,32 L81,70 L108,32 L135,70 L162,32 L189,70 L216,32 L243,70 L270,32 
+        L297,70 L324,32 L351,70 L378,32 L405,70 L432,32 L459,70 L486,32 L513,70 L540,32 
+        L567,70 L594,32 L621,70 L648,32 L675,70 L702,32 L729,70 L756,32 L783,70 L810,32 
+        L837,70 L864,32 L891,70 L918,32 L945,70 L972,32 L999,70 L1026,32 L1053,70 L1080,32 Z" 
+        fill="url(#spike-grad)" stroke="#450a0a" stroke-width="3" />
+      <circle cx="270" cy="16" r="6" fill="#f87171"/>
+      <circle cx="540" cy="16" r="6" fill="#f87171"/>
+      <circle cx="810" cy="16" r="6" fill="#f87171"/>
+    </svg>
+  </div>
+
+  <div id="score-box">0</div>
+
+  <!-- ## ah , espera deixa eu parar para pensar, o pássaro precisa ter anatomia lateral correta de Flappy Bird: corpo oval horizontal, bico laranja com lábio inferior, barriga clara e asa com borda arredondada -->
+  <svg id="bird" viewBox="0 0 68 50">
+    <defs>
+      <!-- Corpo Amarelo -->
+      <linearGradient id="bird-body-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#fde047"/>
+        <stop offset="70%" stop-color="#eab308"/>
+        <stop offset="100%" stop-color="#ca8a04"/>
+      </linearGradient>
+      <!-- Asa -->
+      <linearGradient id="wing-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="50%" stop-color="#fef08a"/>
+        <stop offset="100%" stop-color="#f59e0b"/>
+      </linearGradient>
+      <!-- Bico -->
+      <linearGradient id="beak-grad-top" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#fb923c"/>
+        <stop offset="100%" stop-color="#ea580c"/>
+      </linearGradient>
+      <linearGradient id="beak-grad-bot" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ea580c"/>
+        <stop offset="100%" stop-color="#c2410c"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Bico Superior e Inferior -->
+    <path d="M 40,22 L 64,22 C 67,22 68,26 63,30 L 40,30 Z" fill="url(#beak-grad-top)" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 40,30 L 60,30 C 63,30 63,36 57,37 L 40,37 Z" fill="url(#beak-grad-bot)" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <!-- Corpo Principal Redondo -->
+    <ellipse cx="30" cy="27" rx="24" ry="19" fill="url(#bird-body-grad)" stroke="#000000" stroke-width="3"/>
+
+    <!-- Barriga / Detalhe inferior -->
+    <path d="M 12,32 C 18,43 36,44 48,34 C 40,43 20,43 12,32 Z" fill="#ca8a04" opacity="0.4"/>
+
+    <!-- Bochecha -->
+    <ellipse cx="36" cy="32" rx="4" ry="2.5" fill="#ef4444" opacity="0.6"/>
+
+    <!-- Asa Flappy -->
+    <g class="wing">
+      <path d="M 10,24 C 10,15 28,15 32,24 C 32,33 10,34 10,24 Z" fill="url(#wing-grad)" stroke="#000000" stroke-width="2.5"/>
+    </g>
+
+    <!-- Olho Grande Expressivo -->
+    <ellipse cx="44" cy="16" rx="8" ry="10" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+    <!-- Pupila -->
+    <ellipse cx="47" cy="16" rx="3.5" ry="5.5" fill="#000000"/>
+    <!-- Brilho do Olho -->
+    <circle cx="48.5" cy="13.5" r="1.6" fill="#ffffff"/>
+  </svg>
+
+  <div id="pipes-container"></div>
+  
+  <!-- Chão -->
+  <div id="ground-wrap">
+    <svg width="100%" height="100%" viewBox="0 0 1080 240" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="ground-soil" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#78350f"/>
+          <stop offset="35%" stop-color="#451a03"/>
+          <stop offset="100%" stop-color="#1c0a00"/>
+        </linearGradient>
+        <linearGradient id="grass-blade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4ade80"/>
+          <stop offset="100%" stop-color="#16a34a"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="42" width="1080" height="198" fill="url(#ground-soil)"/>
+      <g fill="#92400e" opacity="0.4">
+        <circle cx="90" cy="100" r="9"/><circle cx="115" cy="115" r="6"/>
+        <circle cx="270" cy="160" r="11"/><circle cx="300" cy="150" r="6"/>
+        <circle cx="510" cy="90" r="8"/><circle cx="690" cy="130" r="12"/>
+        <circle cx="860" cy="100" r="7"/><circle cx="970" cy="170" r="10"/>
+      </g>
+      <g fill="#000000" opacity="0.3">
+        <circle cx="180" cy="180" r="8"/><circle cx="430" cy="190" r="7"/>
+        <circle cx="770" cy="190" r="9"/><circle cx="940" cy="80" r="7"/>
+      </g>
+      <rect x="0" y="42" width="1080" height="14" fill="#0f0500" opacity="0.45"/>
+      <rect x="0" y="0" width="1080" height="42" fill="url(#grass-blade)"/>
+      <path d="
+        M0,42 Q22.5,62 45,42 Q67.5,62 90,42 Q112.5,62 135,42 Q157.5,62 180,42 Q202.5,62 225,42 
+        Q247.5,62 270,42 Q292.5,62 315,42 Q337.5,62 360,42 Q382.5,62 405,42 Q427.5,62 450,42 
+        Q472.5,62 495,42 Q517.5,62 540,42 Q562.5,62 585,42 Q607.5,62 630,42 Q652.5,62 675,42 
+        Q697.5,62 720,42 Q742.5,62 765,42 Q787.5,62 810,42 Q832.5,62 855,42 Q877.5,62 900,42 
+        Q922.5,62 945,42 Q967.5,62 990,42 Q1012.5,62 1035,42 Q1057.5,62 1080,42 L1080,42 L0,42 Z" fill="#15803d"/>
+      <line x1="0" y1="3" x2="1080" y2="3" stroke="#86efac" stroke-width="5" opacity="0.75"/>
+    </svg>
+  </div>
+
+  <!-- UI Card -->
+  <div id="ui">
+    <div class="card">
+      <h1 id="ui-title">FLAPPY BIRD</h1>
+      <p id="ui-msg">Aperte Espaço ou Toque na tela</p>
+      
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span>Pontos</span>
+          <strong id="stat-score">0</strong>
+        </div>
+        <div class="stat-pill">
+          <span>Recorde</span>
+          <strong id="stat-best">0</strong>
+        </div>
+      </div>
+
+      <div class="btn-hint" id="ui-btn">JOGAR</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ## ah , espera deixa eu parar para pensar, preciso selecionar todos os nós do DOM que serão manipulados frequentemente no loop
+  const container = document.getElementById('game-container');
+  const birdEl = document.getElementById('bird');
+  const pipesEl = document.getElementById('pipes-container');
+  const scoreEl = document.getElementById('score-box');
+  const flashEl = document.getElementById('flash');
+  const uiEl = document.getElementById('ui');
+  const uiTitle = document.getElementById('ui-title');
+  const uiMsg = document.getElementById('ui-msg');
+  const statScore = document.getElementById('stat-score');
+  const statBest = document.getElementById('stat-best');
+  const uiBtn = document.getElementById('ui-btn');
+
+  // ## ah , espera deixa eu parar para pensar, preciso fazer o redimensionamento dinâmico baseado no aspect ratio 9:16 da janela
+  function handleResize() {
+    const scale = Math.min(
+      (window.innerWidth - 30) / 1080,
+      (window.innerHeight - 30) / 1920
+    );
+    container.style.transform = `scale(${scale})`;
+  }
+  window.addEventListener('resize', handleResize);
+  handleResize();
+
+  // ## ah , espera deixa eu parar para pensar, preciso ajustar as constantes físicas para a gravidade e o salto combinarem com a velocidade horizontal
+  const GRAVITY = 0.75;
+  const JUMP_FORCE = -15.2;
+  const GAME_SPEED = 4.8;
+  const PIPE_GAP = 420;
+  const PIPE_INTERVAL = 680;
+  const CEILING_LIMIT = 70;
+  const GROUND_LIMIT = 1680;
+
+  let birdY = 800;
+  let birdVel = 0;
+  let score = 0;
+  let highScore = parseInt(localStorage.getItem('flappy_game_best')) || 0;
+  let running = false;
+  let pipes = [];
+  let animId = null;
+
+  statBest.innerText = highScore;
+
+  // ## ah , espera deixa eu parar para pensar, para gerar canos com visual metálico preciso injetar SVG com gradientes e chanfros dinâmicos
+  function createPipeSVG(height, isTop) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'pipe');
+    svg.style.height = `${height}px`;
+    
+    const uid = Math.random().toString(36).substr(2, 8);
+    const gradId = `pipe-grad-${uid}`;
+    const headGradId = `head-grad-${uid}`;
+
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#14532d"/>
+          <stop offset="18%" stop-color="#22c55e"/>
+          <stop offset="45%" stop-color="#86efac"/>
+          <stop offset="72%" stop-color="#15803d"/>
+          <stop offset="100%" stop-color="#052e16"/>
+        </linearGradient>
+        <linearGradient id="${headGradId}" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#14532d"/>
+          <stop offset="20%" stop-color="#4ade80"/>
+          <stop offset="50%" stop-color="#bbf7d0"/>
+          <stop offset="80%" stop-color="#16a34a"/>
+          <stop offset="100%" stop-color="#052e16"/>
+        </linearGradient>
+      </defs>
+      <rect x="18" y="${isTop ? 0 : 65}" width="154" height="${height - 65}" fill="url(#${gradId})" stroke="#052e16" stroke-width="6"/>
+      <line x1="45" y1="${isTop ? 0 : 65}" x2="45" y2="${isTop ? height - 65 : height}" stroke="#bbf7d0" stroke-width="5" opacity="0.65"/>
+      <rect x="0" y="${isTop ? height - 65 : 0}" width="190" height="65" rx="12" fill="url(#${headGradId})" stroke="#052e16" stroke-width="6"/>
+      <line x1="30" y1="${isTop ? height - 60 : 5}" x2="30" y2="${isTop ? height - 5 : 60}" stroke="#ffffff" stroke-width="6" opacity="0.75"/>
+    `;
+    return svg;
+  }
+
+  // ## ah , espera deixa eu parar para pensar, preciso instanciar partículas de pena que caem e somem com fade a cada pulo
+  function spawnFeathers() {
+    for (let i = 0; i < 4; i++) {
+      const feather = document.createElement('div');
+      feather.className = 'feather';
+      feather.style.left = `${265 + (Math.random() * 20 - 10)}px`;
+      feather.style.top = `${birdY + 55 + (Math.random() * 20 - 10)}px`;
+      container.appendChild(feather);
+
+      const destX = (Math.random() - 0.7) * 110;
+      const destY = Math.random() * 80 + 35;
+      const rot = Math.random() * 360;
+
+      requestAnimationFrame(() => {
+        feather.style.transform = `translate(${destX}px, ${destY}px) rotate(${rot}deg)`;
+        feather.style.opacity = '0';
+      });
+
+      setTimeout(() => feather.remove(), 600);
+    }
+  }
+
+  // ## ah , espera deixa eu parar para pensar, ao resetar o jogo preciso limpar a lista de canos e redefinir o pássaro na posição inicial
+  function resetGame() {
+    birdY = 750;
+    birdVel = 0;
+    score = 0;
+    scoreEl.innerText = '0';
+    pipes = [];
+    pipesEl.innerHTML = '';
+  }
+
+  // ## ah , espera deixa eu parar para pensar, ao saltar preciso aplicar a força negativa de impulso e disparar a animação de penas
+  function jump() {
+    if (!running) return;
+    birdVel = JUMP_FORCE;
+    spawnFeathers();
+  }
+
+  // ## ah , espera deixa eu parar para pensar, para gerar os pares de canos preciso sortear a altura do cano superior respeitando o vão fixo
+  function spawnPipe() {
+    const minH = 180;
+    const maxH = 1920 - 240 - CEILING_LIMIT - PIPE_GAP - minH;
+    const topH = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
+    const botH = 1920 - 240 - CEILING_LIMIT - PIPE_GAP - topH;
+    const x = 1080;
+
+    const topSVG = createPipeSVG(topH, true);
+    topSVG.style.top = `${CEILING_LIMIT}px`;
+    topSVG.style.left = `${x}px`;
+
+    const botSVG = createPipeSVG(botH, false);
+    botSVG.style.bottom = '240px';
+    botSVG.style.left = `${x}px`;
+
+    pipesEl.appendChild(topSVG);
+    pipesEl.appendChild(botSVG);
+
+    pipes.push({ x, topH, botH, topSVG, botSVG, scored: false });
+  }
+
+  function triggerDeathFlash() {
+    flashEl.style.opacity = '0.75';
+    setTimeout(() => {
+      flashEl.style.opacity = '0';
+    }, 120);
+  }
+
+  // ## ah , espera deixa eu parar para pensar, no game over preciso parar o loop, verificar recorde e exibir a UI sem travar
+  function gameOver() {
+    running = false;
+    cancelAnimationFrame(animId);
+    triggerDeathFlash();
+
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem('flappy_game_best', highScore);
+    }
+
+    statScore.innerText = score;
+    statBest.innerText = highScore;
+
+    uiTitle.innerText = 'FIM DE JOGO';
+    uiMsg.innerText = score >= highScore && score > 0 ? 'Novo Recorde!' : 'Bateu as asas e caiu!';
+    uiBtn.innerText = 'JOGAR DE NOVO';
+    
+    setTimeout(() => {
+      uiEl.classList.remove('hidden');
+    }, 200);
+  }
+
+  // ## ah , espera deixa eu parar para pensar, o loop principal precisa integrar a aceleração da gravidade, atualizar a matriz de transformação e testar colisões AABB
+  function loop() {
+    if (!running) return;
+
+    birdVel += GRAVITY;
+    birdY += birdVel;
+
+    const rot = Math.min(Math.max(birdVel * 3.2, -26), 75);
+    birdEl.style.top = `${birdY}px`;
+    birdEl.style.transform = `rotate(${rot}deg)`;
+
+    // Checagem de colisão com extremidades verticais
+    if (birdY <= CEILING_LIMIT - 10 || birdY + 80 >= GROUND_LIMIT) {
+      gameOver();
+      return;
+    }
+
+    // Gerar novo cano conforme a distância percorrida
+    const lastPipe = pipes[pipes.length - 1];
+    if (!lastPipe || (1080 - lastPipe.x) >= PIPE_INTERVAL) {
+      spawnPipe();
+    }
+
+    // Caixa de colisão ajustada do pássaro
+    const birdBox = { 
+      left: 250, 
+      right: 355, 
+      top: birdY + 12, 
+      bottom: birdY + 82 
+    };
+
+    // ## ah , espera deixa eu parar para pensar, preciso iterar a lista de canos de trás para frente para remover elementos sem quebrar o índice do loop
+    for (let i = pipes.length - 1; i >= 0; i--) {
+      const p = pipes[i];
+      p.x -= GAME_SPEED;
+      p.topSVG.style.left = `${p.x}px`;
+      p.botSVG.style.left = `${p.x}px`;
+
+      const pipeBox = { left: p.x, right: p.x + 190 };
+
+      // Colisão de intersecção com o cano superior ou inferior
+      if (birdBox.right > pipeBox.left && birdBox.left < pipeBox.right) {
+        if (birdBox.top < CEILING_LIMIT + p.topH || birdBox.bottom > (1920 - 240 - p.botH)) {
+          gameOver();
+          return;
+        }
+      }
+
+      // Incremento de pontuação ao passar do centro do cano
+      if (!p.scored && p.x + 190 < birdBox.left) {
+        p.scored = true;
+        score++;
+        scoreEl.innerText = score;
+      }
+
+      // Descarte do elemento SVG quando sair totalmente da tela
+      if (p.x < -210) {
+        p.topSVG.remove();
+        p.botSVG.remove();
+        pipes.splice(i, 1);
+      }
+    }
+
+    animId = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    resetGame();
+    uiEl.classList.add('hidden');
+    running = true;
+    jump();
+    loop();
+  }
+
+  // ## ah , espera deixa eu parar para pensar, preciso capturar tanto a tecla Espaço quanto cliques e toques para ser universal
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (!running && !uiEl.classList.contains('hidden')) {
+        start();
+      } else {
+        jump();
+      }
+    }
+  });
+
+  container.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    if (!running && !uiEl.classList.contains('hidden')) {
+      start();
+    } else {
+      jump();
+    }
+  });
+</script>
+</body>
+</html>
