@@ -28,3 +28,9 @@ V4
 - system prompt recomendado
 - biblioteca de prompts dos exemplos
 - arquivo completo de prompts em docs/prompts-dos-joguinhos.md
+
+V5
+- adicionada explicação sobre a limitação de raciocínio com ~1B parâmetros ativos
+- adicionada estrutura de prompt recomendada:
+  Crie um [o que você quiser] em um único HTML.
+  Retorne somente o HTML completo.

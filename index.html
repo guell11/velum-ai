@@ -195,7 +195,31 @@
     <p>VELUM-Coder foi pós-treinado de forma muito agressiva para código. Ele funciona melhor com sampling conservador, instrução explícita e um começo de resposta que já coloque o modelo no formato esperado. Sem isso, ele pode voltar para texto genérico em vez de entregar código completo.</p>
   </div>
 
+  
   <div class="warning-strip reveal">
+    <strong>POR QUE O FORMATO DO PROMPT IMPORTA:</strong>
+    como o VELUM-Coder trabalha com aproximadamente <strong>1B de parâmetros ativos por inferência</strong>,
+    ele é muito eficiente, mas tem menos margem para raciocínio aberto e interpretação ambígua do que modelos muito maiores.
+    Prompts vagos tendem a degradar a saída. O modelo responde melhor quando recebe uma estrutura curta, direta e com o formato final explicitamente definido.
+  </div>
+
+  <div class="inference-card reveal" style="margin:0 0 22px">
+    <h3>Estrutura recomendada de prompt</h3>
+    <p style="color:#93aabd;font-size:12px;line-height:1.75;margin:0 0 16px">
+      Para geração de projetos completos, use preferencialmente este padrão:
+    </p>
+    <div class="codebox">
+      <button class="copy-btn" data-copy-target="prompt-structure">COPIAR</button>
+      <pre id="prompt-structure">Crie um [o que você quiser] em um único HTML.
+Retorne somente o HTML completo.</pre>
+    </div>
+    <p style="color:#93aabd;font-size:12px;line-height:1.75;margin:16px 0 0">
+      Exemplo: <strong>“Crie um jogo 3D de corrida de carro em uma floresta em um único HTML. Retorne somente o HTML completo.”</strong>
+      Quanto menos ambígua a instrução e mais claro o formato de saída, maior a chance de o modelo permanecer em modo de código em vez de gerar explicações genéricas.
+    </p>
+  </div>
+
+<div class="warning-strip reveal">
     <strong>IMPORTANTE:</strong> este não é um modelo de conversa. Para geração de código, use prompts objetivos, peça explicitamente o formato de saída e, em tarefas maiores, use prefill do começo do arquivo esperado.
   </div>
 
