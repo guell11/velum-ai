@@ -1,425 +1,451 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="VELUM Coder — modelo local 8B / ~1B ativo, pós-treinado com foco extremo em código e disponível quantizado no Hugging Face." data-i18n-content="meta_description" name="description"/>
-<meta content="#050b14" name="theme-color"/>
-<title>VELUM Coder — Local. Quantized. Code-first.</title>
-<link href="./velum-release-v6.css?v=6" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="LEVUM — modelo local de 9B parâmetros baseado em Qwen 3.5 9B, focado em código e construção de software.">
+<meta name="theme-color" content="#050b14">
+<title>LEVUM — Local por padrão. Code specialist.</title>
+<link rel="stylesheet" href="./velum-release-v6.css?v=12">
 </head>
 <body>
-<div aria-hidden="true" class="noise"></div>
-<div aria-hidden="true" class="cursor-glow"></div>
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="page-rio" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+
 <header class="site-header" id="top">
-<a aria-label="VELUM início" class="brand" data-i18n-aria-label="aria_home" href="#top">
-<span aria-hidden="true" class="brand-mark">V</span>
-<span>VELUM</span>
-</a>
-<nav aria-label="Navegação principal" class="nav">
-<a data-i18n="nav_model" href="#modelo">MODELO</a>
-<a data-i18n="nav_arch" href="#arquitetura">ARQUITETURA</a>
-<a data-i18n="nav_projects" href="#projetos">PROJETOS</a>
-<a href="#inferencia">INFERÊNCIA</a><a data-i18n="nav_release" href="#download">DOWNLOAD</a>
-</nav>
-<a class="button button-ghost header-cta" data-i18n="nav_cta" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer">BAIXAR NO HF ↗</a>
-<div class="language-switcher"><select aria-label="Selecionar idioma" id="language-select"><option value="pt-BR">PT-BR</option><option value="en">EN</option><option value="zh-CN">中文</option><option value="it">IT</option><option value="es">ES</option></select></div><button aria-expanded="false" aria-label="Abrir menu" class="menu-button" data-i18n-aria-label="aria_menu"><span></span><span></span></button>
+  <a class="brand" href="#top" aria-label="LEVUM início"><span class="brand-mark">L</span><span>LEVUM</span></a>
+  <nav class="nav" aria-label="Navegação principal">
+    <a href="#modelo">MODELO</a>
+    <a href="#quantizacao">QUANTIZAÇÕES</a>
+    <a href="#projetos">PROJETOS</a>
+    <a href="#download">BAIXAR</a>
+  </nav>
+  <div class="language-switcher">
+    <select aria-label="Selecionar idioma">
+      <option>PT-BR</option>
+      <option>EN</option>
+    </select>
+  </div>
+  <button class="menu-button" aria-expanded="false" aria-label="Abrir menu"><span></span><span></span></button>
 </header>
+
 <main>
-<section aria-labelledby="hero-title" class="hero">
-<div aria-hidden="true" class="hero-bg"></div>
-<div aria-hidden="true" class="hero-grid"></div>
-<div aria-hidden="true" class="hero-vignette"></div>
-<div class="hero-copy reveal">
-<div class="eyebrow" data-i18n="hero_eyebrow"><span class="pulse"></span> LOCAL-FIRST · CODE SPECIALIST</div>
-<h1 id="hero-title">VELUM</h1>
-<p class="hero-kicker">8B TOTAL <span>/</span> ~1B ACTIVE</p>
-<p class="hero-description" data-i18n="hero_desc">Um modelo <strong>já disponível</strong>, quantizado e pós-treinado quase inteiramente para <strong>código.</strong><br/>Local-first. Não é um chatbot. É uma ferramenta para construir software.</p>
-<div class="hero-actions">
-<a class="button button-primary" data-i18n="hero_download" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer">DOWNLOAD QUANTIZADO <span>↗</span></a>
-<a class="text-link" data-i18n="hero_projects" href="#projetos">VER PROVAS FUNCIONAIS <span>↓</span></a>
-</div>
-</div>
-<div aria-hidden="true" class="hero-side-label left" data-i18n="hero_side_left">POST-TRAINED FOR CODE</div>
-<div aria-hidden="true" class="hero-side-label right" data-i18n="hero_side_right">FEITO NO BRASIL</div>
-<div class="hero-metrics reveal delay-2">
-<div><span data-i18n="metric_base_label">BASE</span><strong>unsloth/LFM2.5-8B-A1B</strong></div>
-<div><span data-i18n="metric_focus_label">POST-TRAINING</span><strong data-i18n="metric_focus_value">95% CODE · 5% LANGUAGE</strong></div>
-<div><span data-i18n="metric_exec_label">STATUS</span><strong data-i18n="metric_exec_value">AVAILABLE · QUANTIZED</strong></div>
-</div>
-<a aria-label="Rolar para o conteúdo" class="scroll-indicator" data-i18n-aria-label="aria_scroll" href="#modelo"><span></span></a>
-</section>
-<section class="section intro" id="modelo">
-<div class="section-label" data-i18n="sec_model">01 / MODELO</div>
-<div class="intro-grid">
-<div class="section-heading reveal">
-<p class="eyebrow" data-i18n="intro_eyebrow">BUILT, NOT ANSWERED.</p>
-<h2 data-i18n="intro_title">Menos chatbot.<br/><em>Mais ferramenta.</em></h2>
-</div>
-<div class="intro-copy reveal delay-1">
-<p data-i18n="intro_p1">VELUM Coder é um post-training especializado sobre <strong>unsloth/LFM2.5-8B-A1B</strong>, com 8B parâmetros totais e ~1B ativos. O modelo base já entrega a arquitetura eficiente; o VELUM concentra a especialização.</p>
-<p data-i18n="intro_p2">O post-training foi deliberadamente agressivo: aproximadamente <strong>95% do material de especialização é código</strong> e 5% linguagem natural, o suficiente para preservar comunicação sem empurrar o modelo de volta para conversa genérica.</p>
-<div class="quote" data-i18n="intro_quote">VELUM não foi otimizado para conversa casual. Ele foi otimizado para escrever, entender, corrigir e montar software.</div>
-</div>
-</div>
-</section>
-<section aria-label="Especificações rápidas" class="stats-strip">
-<div class="stat-card reveal"><span data-i18n="stat_total_label">PARÂMETROS TOTAIS</span><strong>8B</strong><small data-i18n="stat_total_small">capacidade disponível</small></div>
-<div class="stat-card reveal delay-1"><span data-i18n="stat_active_label">ATIVOS</span><strong>~1B</strong><small data-i18n="stat_active_small">por inferência</small></div>
-<div class="stat-card reveal delay-2"><span data-i18n="stat_spec_label">POST-TRAINING</span><strong>95%</strong><small data-i18n="stat_spec_small">conteúdo focado em código</small></div>
-<div class="stat-card reveal delay-3"><span data-i18n="stat_phil_label">RELEASE</span><strong>READY</strong><small data-i18n="stat_phil_small">quantizado no Hugging Face</small></div>
-</section>
-<section class="section architecture" id="arquitetura">
-<div class="section-label" data-i18n="sec_arch">02 / ARQUITETURA</div>
-<div class="arch-grid">
-<div class="arch-copy reveal">
-<p class="eyebrow" data-i18n="arch_p">8B DISPONÍVEIS. ~1B TRABALHANDO.</p>
-<h2 data-i18n="arch_title">Capacidade sem<br/>força bruta.</h2>
-<p data-i18n="arch_p">A eficiência vem da base <strong>LFM2.5-8B-A1B</strong>. O VELUM não reivindica a arquitetura original: ele adiciona uma camada de especialização por fine-tuning e post-training focada em desenvolvimento de software.</p>
-<ul class="feature-list">
-<li><span>01</span><div><strong data-i18n="feat1_title">Base eficiente</strong><p data-i18n="feat1_p">8B totais e ~1B ativos herdados do LFM2.5-8B-A1B.</p></div></li>
-<li><span>02</span><div><strong data-i18n="feat2_title">Post-training extremo</strong><p data-i18n="feat2_p">95% código, 5% linguagem natural para preservar instrução e comunicação.</p></div></li>
-<li><span>03</span><div><strong data-i18n="feat3_title">Draft model</strong><p data-i18n="feat3_p">LFM2.5-230M usado como draft model no stack de inferência.</p></div></li>
-</ul>
-</div>
-<div aria-label="Fluxo conceitual da arquitetura" class="arch-visual reveal delay-1">
-<div class="arch-caption">INFERENCE FLOW</div>
-<div class="node input">INPUT</div>
-<div class="flow-line l1"></div>
-<div class="node router">BASE MODEL</div>
-<div class="experts">
-<div class="node expert active">CODE</div>
-<div class="node expert">REASON</div>
-<div class="node expert">STRUCTURE</div>
-</div>
-<div class="flow-line l2"></div>
-<div class="node output">RUNNING CODE</div>
-<div class="arch-orbit orbit-a"></div>
-<div class="arch-orbit orbit-b"></div>
-</div>
-</div>
-</section>
-<section class="section demos">
-<div class="section-label" data-i18n="sec_demos">03 / DEMOS</div>
-<div class="video-grid">
-<article class="video-card reveal">
-<div class="video-frame">
-<video loop="" muted="" playsinline="" poster="./assets/projects/railway.png" preload="metadata">
-<source src="./assets/video/game-teaser.mp4" type="video/mp4"/>
-</video>
-<button aria-label="Reproduzir vídeo" class="video-toggle" data-i18n-aria-label="aria_video_play">▶</button>
-</div>
-<div class="video-meta"><div><span>TEASER 01</span><strong>Game generation</strong></div><p data-i18n="demo1_p">Prompt → código → mundos jogáveis.</p></div>
-</article>
-<article class="video-card reveal delay-1">
-<div class="video-frame">
-<video loop="" muted="" playsinline="" poster="./assets/projects/bonsai.png" preload="metadata">
-<source src="./assets/video/model-teaser.mp4" type="video/mp4"/>
-</video>
-<button aria-label="Reproduzir vídeo" class="video-toggle" data-i18n-aria-label="aria_video_play">▶</button>
-</div>
-<div class="video-meta"><div><span>TEASER 02</span><strong>Model identity</strong></div><p data-i18n="demo2_p">Local. Fast. Efficient. Smart.</p></div>
-</article>
-</div>
-</section>
-<section class="section projects" id="projetos">
-<div class="section-label" data-i18n="sec_projects">04 / PROJETOS GERADOS</div>
-<div class="projects-head reveal">
-<div>
-<p class="eyebrow" data-i18n="projects_eyebrow">FROM PROMPT TO RUNNING CODE.</p>
-<h2 data-i18n="projects_title">Código que<br/>realmente roda.</h2>
-</div>
-<p data-i18n="projects_p">Sem benchmark sintético por enquanto. Em vez de esconder isso, mostramos avaliações funcionais: projetos completos gerados pelo modelo e executáveis diretamente no navegador.</p>
-</div>
-<div class="project-grid">
-<article class="project-card project-tall reveal">
-<div class="project-media"><img alt="Flappy Bird gerado" data-i18n-alt="alt_flappy" loading="lazy" src="./assets/projects/flappy.png"/></div>
-<div class="project-info"><span data-i18n="proj1_type">01 / BROWSER GAME</span><h3>Flappy Bird</h3><p data-i18n="proj1_p">Game loop, obstáculos, colisão, score, animações e interface.</p><div class="tags"><b>HTML</b><b>CSS</b><b>JS</b></div><a class="demo-launch" href="./demos/flappybird.html" target="_blank" rel="noopener" data-i18n="try_demo">TESTAR JOGO ↗</a></div>
-</article>
-<article class="project-card reveal delay-1">
-<div class="project-media"><img alt="Bonsai Voxel 3D gerado" data-i18n-alt="alt_bonsai" loading="lazy" src="./assets/projects/bonsai.png"/></div>
-<div class="project-info"><span data-i18n="proj2_type">02 / THREE.JS</span><h3>Bonsai Voxel</h3><p data-i18n="proj2_p">Cena 3D, voxels, câmera orbital, interação e partículas.</p><div class="tags"><b>THREE.JS</b><b>WEBGL</b><b>3D</b></div><a class="demo-launch" href="./demos/bonsai.html" target="_blank" rel="noopener" data-i18n="try_demo">TESTAR JOGO ↗</a></div>
-</article>
-<article class="project-card reveal delay-2">
-<div class="project-media"><img alt="Railway Rush gerado" data-i18n-alt="alt_railway" loading="lazy" src="./assets/projects/railway.png"/></div>
-<div class="project-info"><span data-i18n="proj3_type">03 / GAMEPLAY</span><h3>Railway Rush</h3><p data-i18n="proj3_p">Corrida 3D com câmera de perseguição, pista, trem e collectibles.</p><div class="tags"><b>THREE.JS</b><b>PHYSICS</b><b>GAME</b></div><a class="demo-launch" href="./demos/railway-rush.html" target="_blank" rel="noopener" data-i18n="try_demo">TESTAR JOGO ↗</a></div>
-</article>
-</div>
-</section>
-<section class="section code-section">
-<div class="section-label" data-i18n="sec_code">05 / CODE-FIRST</div>
-<div class="code-grid">
-<div aria-label="Exemplo conceitual de terminal" class="code-window reveal">
-<div class="window-bar"><i></i><i></i><i></i><span>velum.local</span></div>
-<pre><code data-i18n-html="terminal"><span class="muted">$</span> velum run
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
 
-<span class="blue">model</span>: VELUM-8B
-<span class="blue">mode</span>: local
-<span class="blue">focus</span>: code
-
-<span class="muted">&gt;</span> crie um jogo 3D com uma pista,
-  moedas e um trem ao lado da estrada
-
-<span class="green">✓ planning architecture</span>
-<span class="green">✓ generating game loop</span>
-<span class="green">✓ building scene</span>
-<span class="green">✓ wiring controls</span>
-<span class="green">✓ runnable output</span>
-
-<span class="accent">BUILD COMPLETE.</span></code></pre>
-</div>
-<div class="code-copy reveal delay-1">
-<p class="eyebrow" data-i18n="code_p">IDEA IN. SOFTWARE OUT.</p>
-<h2 data-i18n="code_title">O resultado não precisa ser outro parágrafo.</h2>
-<p>O objetivo do post-training é fazer o modelo operar como ferramenta de desenvolvimento: entender intenção, estruturar solução, gerar código, corrigir erros e iterar.</p>
-<div class="capability-table">
-<div><span data-i18n="cap1_label">GERAÇÃO</span><strong data-i18n="cap1_value">projetos completos</strong></div>
-<div><span data-i18n="cap2_label">DEBUG</span><strong data-i18n="cap2_value">análise + correção</strong></div>
-<div><span data-i18n="cap3_label">REFATORAÇÃO</span><strong data-i18n="cap3_value">estrutura + clareza</strong></div>
-<div><span data-i18n="cap4_label">PROTOTIPAGEM</span><strong data-i18n="cap4_value">ideia → executável</strong></div>
-</div>
-</div>
-</div>
-</section>
-
-
-<section class="section inference-section" id="inferencia">
-  <div class="section-label">06 / INFERÊNCIA</div>
-
-  <div class="inference-head reveal">
-    <div>
-      <p class="eyebrow">CONFIGURAÇÃO RECOMENDADA</p>
-      <h2>USE DO<br>JEITO CERTO.</h2>
+    <div class="hero-copy reveal">
+      <div class="eyebrow"><span class="pulse"></span> LOCAL · ESPECIALISTA EM CÓDIGO</div>
+      <h1 id="hero-title">LEVUM</h1>
+      <p class="hero-kicker" id="hero-kicker">QWEN 3.5 <span>/</span> 9B PARÂMETROS</p>
+      <p class="hero-description" id="hero-description">Um modelo local baseado em <strong>Qwen 3.5 9B</strong>, moldado para escrever, entender e construir <strong>software.</strong><br>Menos cerimônia. Mais código rodando.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="https://huggingface.co/guell00/LEVUM" target="_blank" rel="noreferrer">BAIXAR MODELO <span>↗</span></a>
+        <a class="text-link" href="#projetos">VER PROJETOS <span>↓</span></a>
+      </div>
     </div>
-    <p>VELUM-Coder foi pós-treinado de forma muito agressiva para código. Ele funciona melhor com sampling conservador, instrução explícita e um começo de resposta que já coloque o modelo no formato esperado. Sem isso, ele pode voltar para texto genérico em vez de entregar código completo.</p>
-  </div>
 
-  
-  <div class="warning-strip reveal">
-    <strong>POR QUE O FORMATO DO PROMPT IMPORTA:</strong>
-    como o VELUM-Coder trabalha com aproximadamente <strong>1B de parâmetros ativos por inferência</strong>,
-    ele é muito eficiente, mas tem menos margem para raciocínio aberto e interpretação ambígua do que modelos muito maiores.
-    Prompts vagos tendem a degradar a saída. O modelo responde melhor quando recebe uma estrutura curta, direta e com o formato final explicitamente definido.
-  </div>
+    <div class="hero-side-label left" aria-hidden="true">MODELO LOCAL PARA CÓDIGO</div>
+    <div class="hero-side-label right" aria-hidden="true">FEITO NO BRASIL</div>
 
-  <div class="inference-card reveal" style="margin:0 0 22px">
-    <h3>Estrutura recomendada de prompt</h3>
-    <p style="color:#93aabd;font-size:12px;line-height:1.75;margin:0 0 16px">
-      Para geração de projetos completos, use preferencialmente este padrão:
-    </p>
-    <div class="codebox">
-      <button class="copy-btn" data-copy-target="prompt-structure">COPIAR</button>
-      <pre id="prompt-structure">Crie um [o que você quiser] em um único HTML.
+    <div class="hero-metrics reveal delay-2">
+      <div><span>MODELO BASE</span><strong>QWEN 3.5 9B</strong></div>
+      <div><span>FOCO</span><strong>CÓDIGO · SOFTWARE</strong></div>
+      <div><span>STATUS</span><strong>LOCAL · DISPONÍVEL</strong></div>
+    </div>
+
+    <a class="scroll-indicator" href="#modelo" aria-label="Rolar para o conteúdo"><span></span></a>
+  </section>
+
+  <div class="middle-shell">
+    <div class="middle-ambient" aria-hidden="true">
+      <span class="ambient-orb orb-one"></span>
+      <span class="ambient-orb orb-two"></span>
+      <span class="ambient-line line-one"></span>
+      <span class="ambient-line line-two"></span>
+    </div>
+    <section class="section intro" id="modelo">
+      <div class="section-label">01 / MODELO</div>
+      <div class="intro-grid">
+        <div class="section-heading reveal">
+          <p class="eyebrow">FEITO PARA ENTREGAR.</p>
+          <h2>Software primeiro.<br><em>Local por padrão.</em></h2>
+        </div>
+        <div class="intro-copy reveal delay-1">
+          <p class="lead">LEVUM é um modelo local de <strong>9B parâmetros</strong>, baseado em <strong>Qwen 3.5 9B</strong> e direcionado para desenvolvimento de software.</p>
+          <p>O foco é direto: escrever, entender, corrigir, estruturar e empurrar código até virar software rodando. Sem inflar a landing page com ficção corporativa.</p>
+          <div class="pill-row" aria-label="Características principais">
+            <span>LOCAL-FIRST</span>
+            <span>9B</span>
+            <span>CODE</span>
+            <span>QWEN 3.5</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-strip" aria-label="Especificações rápidas">
+      <div class="stat-card reveal" data-tilt><span>MODELO BASE</span><strong>QWEN</strong><small>3.5 · 9B</small></div>
+      <div class="stat-card reveal delay-1" data-tilt><span>PARÂMETROS</span><strong>9B</strong><small>modelo base</small></div>
+      <div class="stat-card reveal delay-2" data-tilt><span>FOCO PRINCIPAL</span><strong>CÓDIGO</strong><small>desenvolvimento de software</small></div>
+      <div class="stat-card reveal delay-3" data-tilt><span>EXECUÇÃO</span><strong>LOCAL</strong><small>perto do projeto</small></div>
+    </section>
+
+    <div class="kinetic-strip" aria-hidden="true">
+      <div class="kinetic-track">QWEN 3.5 9B <i>•</i> CÓDIGO LOCAL <i>•</i> BUILD <i>•</i> DEBUG <i>•</i> REFACTOR <i>•</i> SOFTWARE <i>•</i> QWEN 3.5 9B <i>•</i> CÓDIGO LOCAL <i>•</i> BUILD <i>•</i> DEBUG <i>•</i> REFACTOR <i>•</i> SOFTWARE <i>•</i></div>
+    </div>
+
+    <section class="section architecture" id="arquitetura">
+      <div class="section-label">02 / ARQUITETURA</div>
+      <div class="section-top reveal">
+        <div>
+          <p class="eyebrow">QWEN 3.5 9B POR BAIXO DO CAPÔ.</p>
+          <h2>Base conhecida.<br>Foco definido.</h2>
+        </div>
+        <p>Sem inventar mitologia de produto. LEVUM assume uma base clara, trabalha perto do contexto do projeto e prioriza tarefas reais de desenvolvimento.</p>
+      </div>
+
+      <div class="architecture-layout">
+        <div class="architecture-cards reveal">
+          <article data-tilt><span>01</span><div><strong>Qwen 3.5 9B</strong><p>Fundação estável, capacidade geral e sem fumaça desnecessária.</p></div></article>
+          <article data-tilt><span>02</span><div><strong>Foco em código</strong><p>Leitura, geração, correção, refatoração e estrutura.</p></div></article>
+          <article data-tilt><span>03</span><div><strong>Local por padrão</strong><p>Fluxo perto do código, da IDE e dos arquivos reais.</p></div></article>
+        </div>
+
+        <div class="arch-visual reveal delay-1" aria-label="Fluxo conceitual do LEVUM">
+          <div class="arch-caption">FLUXO DE DESENVOLVIMENTO LOCAL</div>
+          <div class="node input">PROMPT / CÓDIGO</div>
+          <div class="flow-line l1"></div>
+          <div class="node router">LEVUM · 9B</div>
+          <div class="experts">
+            <div class="node expert active">BUILD</div>
+            <div class="node expert">DEBUG</div>
+            <div class="node expert">REFACTOR</div>
+          </div>
+          <div class="flow-line l2"></div>
+          <div class="node output">SOFTWARE RODANDO</div>
+          <div class="arch-orbit orbit-a"></div>
+          <div class="arch-orbit orbit-b"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section prompts-section" id="prompts">
+      <div class="section-label">03 / PROMPTS</div>
+      <div class="section-top reveal">
+        <div>
+          <p class="eyebrow">PROMPTS QUE FUNCIONAM.</p>
+          <h2>Prompts claros.<br><em>Saída melhor.</em></h2>
+        </div>
+        <p>A aba de prompts volta, mas sem aquela parede de texto. Aqui ficam formatos curtos e úteis para gerar projeto, refatorar e depurar sem virar tutorial de 40 parágrafos.</p>
+      </div>
+
+      <div class="prompts-layout">
+        <div class="prompt-tabs reveal" data-tilt>
+          <button class="prompt-tab is-active" type="button" data-prompt="project">Projeto completo</button>
+          <button class="prompt-tab" type="button" data-prompt="refactor">Refactor</button>
+          <button class="prompt-tab" type="button" data-prompt="debug">Debug</button>
+        </div>
+
+        <div class="prompt-panel reveal delay-1">
+          <div class="prompt-meta">
+            <span class="live-dot"></span>
+            <span id="prompt-type-label">PROMPT DE PROJETO</span>
+          </div>
+          <pre id="prompt-code">Crie um dashboard financeiro interativo em um único HTML.
 Retorne somente o HTML completo.</pre>
-    </div>
-    <p style="color:#93aabd;font-size:12px;line-height:1.75;margin:16px 0 0">
-      Exemplo: <strong>“Crie um jogo 3D de corrida de carro em uma floresta em um único HTML. Retorne somente o HTML completo.”</strong>
-      Quanto menos ambígua a instrução e mais claro o formato de saída, maior a chance de o modelo permanecer em modo de código em vez de gerar explicações genéricas.
-    </p>
-  </div>
+          <div class="prompt-notes">
+            <div>
+              <span>SAÍDA ESPERADA</span>
+              <strong id="prompt-output">HTML único e completo</strong>
+            </div>
+            <div>
+              <span>COMO AJUDA</span>
+              <strong id="prompt-note">Pede formato direto e reduz ambiguidade.</strong>
+            </div>
+          </div>
+        </div>
 
-<div class="warning-strip reveal">
-    <strong>IMPORTANTE:</strong> este não é um modelo de conversa. Para geração de código, use prompts objetivos, peça explicitamente o formato de saída e, em tarefas maiores, use prefill do começo do arquivo esperado.
-  </div>
-
-  <div class="inference-grid">
-    <div class="inference-card reveal">
-      <h3>Sampling</h3>
-      <table class="inference-table">
-        <thead><tr><th>Parâmetro</th><th>Recomendado</th><th>Descrição</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Temperature</strong></td><td><code>0.1 – 0.2</code></td><td>Mantém a geração focada e determinística.</td></tr>
-          <tr><td><strong>Top P</strong></td><td><code>0.9 – 0.95</code></td><td>Nucleus sampling padrão para cobertura de vocabulário.</td></tr>
-          <tr><td><strong>Top K</strong></td><td><code>40</code></td><td>Limita a dispersão de tokens.</td></tr>
-          <tr><td><strong>Min P</strong></td><td><code>0.05</code></td><td>Remove tokens de cauda longa com probabilidade irrelevante.</td></tr>
-          <tr><td><strong>Repetition Penalty</strong></td><td><code>1.0 – 1.05</code></td><td>Evite valores altos (&gt; 1.1), que podem quebrar sintaxes de código.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="inference-card reveal delay-1">
-      <h3>Prompting</h3>
-      <div class="prompt-tip">
-        <p><strong>Sensibilidade de instrução:</strong> para projetos completos, diga exatamente o artefato, o formato e que a saída deve conter somente o código.</p>
-        <p><strong>Prefill recomendado:</strong> comece a resposta com <code>&lt;!DOCTYPE html&gt;</code> para HTML, <code>import </code> para Python, ou o cabeçalho natural do arquivo esperado.</p>
-        <p><strong>System prompt:</strong> use algo curto e direto. O objetivo é colocar o modelo em modo de programação, não convidá-lo para escrever um ensaio filosófico sobre a própria existência.</p>
-      </div>
-
-      <div class="codebox">
-        <button class="copy-btn" data-copy-target="system-prompt">COPIAR</button>
-        <pre id="system-prompt">Você é um assistente especialista em programação.
-Gere código limpo, funcional, completo e bem estruturado.
-Siga exatamente o formato de saída solicitado.
-Evite explicações quando o usuário pedir somente código.</pre>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="inference-card reveal" style="margin-top:22px">
-    <h3>Structured Output</h3>
-    <p style="color:#8fa6ba;font-size:12px;line-height:1.75;margin:0 0 16px">
-      Se o seu runtime suporta <strong>JSON Schema / structured output</strong>, você pode travar a resposta em um formato previsível.
-      Isso ajuda bastante quando o VELUM é usado em pipelines, agentes, IDEs ou geração automática de arquivos.
-    </p>
-
-    <div class="structured-grid">
-      <div>
-        <span class="structured-label">JSON SCHEMA</span>
-        <div class="codebox structured-codebox">
-          <button class="copy-btn" data-copy-target="structured-schema">COPIAR</button>
-          <pre id="structured-schema">{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "language": {
-      "type": "string"
-    },
-    "code": {
-      "type": "string"
-    },
-    "markdown_full": {
-      "type": "string"
-    }
-  },
-  "required": [
-    "language",
-    "code",
-    "markdown_full"
-  ],
-  "additionalProperties": false
-}</pre>
+        <div class="prompt-tips reveal delay-2">
+          <article data-tilt>
+            <span>DICA 01</span>
+            <strong>Formato explícito</strong>
+            <p>Diga o artefato e diga a saída. Ex.: “retorne somente o HTML completo”.</p>
+          </article>
+          <article data-tilt>
+            <span>DICA 02</span>
+            <strong>Começo guiado quando precisar</strong>
+            <p>Para HTML comece em <code>&lt;!DOCTYPE html&gt;</code>; para Python, em <code>import</code>.</p>
+          </article>
+          <article data-tilt>
+            <span>DICA 03</span>
+            <strong>Saída estruturada</strong>
+            <p>Se o runtime aceitar schema, force previsibilidade. Prompt bom continua obrigatório.</p>
+          </article>
         </div>
       </div>
+    </section>
 
-      <div class="structured-notes">
-        <div class="structured-note">
-          <strong>language</strong>
-          <p>Linguagem principal do artefato gerado, por exemplo <code>html</code>, <code>javascript</code>, <code>python</code>.</p>
+    <section class="section demos" id="demos">
+      <div class="section-label">04 / TEASERS</div>
+      <div class="section-top reveal">
+        <div>
+          <p class="eyebrow">VEJA FUNCIONANDO.</p>
+          <h2>Menos promessa.<br><em>Mais prova.</em></h2>
         </div>
-        <div class="structured-note">
-          <strong>code</strong>
-          <p>Código puro, pronto para salvar em arquivo ou encaminhar para outra etapa do pipeline.</p>
+        <p>Agora é vídeo de verdade rodando na tela. Sem card fingindo que é teaser enquanto mostra só screenshot de bonsai e carrinho.</p>
+      </div>
+
+      <div class="video-grid">
+        <article class="video-card reveal" data-tilt>
+          <div class="video-frame">
+            <video class="autoplay-video" loop muted playsinline preload="auto">
+              <source src="./assets/video/game-teaser.mp4" type="video/mp4">
+            </video>
+            <button class="video-toggle" aria-label="Pausar vídeo">❚❚</button>
+            <div class="video-state"><span class="live-dot"></span> REPRODUZINDO</div>
+          </div>
+          <div class="video-meta">
+            <div>
+              <span>TEASER 01</span>
+              <strong>Geração de jogo</strong>
+            </div>
+            <p>Do pedido ao código executável, com movimento aparecendo de cara.</p>
+          </div>
+        </article>
+
+        <article class="video-card reveal delay-1" data-tilt>
+          <div class="video-frame">
+            <video class="autoplay-video" loop muted playsinline preload="auto">
+              <source src="./assets/video/model-teaser.mp4" type="video/mp4">
+            </video>
+            <button class="video-toggle" aria-label="Pausar vídeo">❚❚</button>
+            <div class="video-state"><span class="live-dot"></span> REPRODUZINDO</div>
+          </div>
+          <div class="video-meta">
+            <div>
+              <span>TEASER 02</span>
+              <strong>Identidade do modelo</strong>
+            </div>
+            <p>Visual em movimento, local-first e técnico sem parecer mockup parado.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section projects" id="projetos">
+      <div class="section-label">05 / PROJETOS</div>
+      <div class="section-top reveal">
+        <div>
+          <p class="eyebrow">DO PROMPT AO CÓDIGO RODANDO.</p>
+          <h2>Abra.<br><em>Teste.</em></h2>
         </div>
-        <div class="structured-note">
-          <strong>markdown_full</strong>
-          <p>Resposta completa em Markdown quando você quiser preservar contexto, explicação ou documentação junto do código.</p>
+        <p>Três demos locais, cada uma com CTA claro, card consistente e imagem sem quebrar nem parecer recorte improvisado.</p>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card reveal" data-tilt>
+          <div class="project-media media-contain"><img src="./assets/projects/flappy.png" alt="Preview do Flappy Bird" loading="lazy"></div>
+          <div class="project-info">
+            <span>01 / JOGO NO NAVEGADOR</span>
+            <h3>Flappy Bird</h3>
+            <p>Game loop, obstáculos, colisão, score e interface em uma demo direta.</p>
+            <div class="project-foot">
+              <div class="tags"><b>HTML</b><b>CSS</b><b>JS</b></div>
+              <a class="demo-launch" href="./demos/flappybird.html" target="_blank" rel="noopener">ABRIR ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal delay-1" data-tilt>
+          <div class="project-media"><img src="./assets/projects/bonsai.png" alt="Preview do Bonsai Voxel" loading="lazy"></div>
+          <div class="project-info">
+            <span>02 / THREE.JS</span>
+            <h3>Bonsai Voxel</h3>
+            <p>Cena 3D, voxels, câmera orbital e partículas com identidade visual forte.</p>
+            <div class="project-foot">
+              <div class="tags"><b>THREE.JS</b><b>WEBGL</b><b>3D</b></div>
+              <a class="demo-launch" href="./demos/bonsai.html" target="_blank" rel="noopener">ABRIR ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal delay-2" data-tilt>
+          <div class="project-media"><img src="./assets/projects/railway.png" alt="Preview do Railway Rush" loading="lazy"></div>
+          <div class="project-info">
+            <span>03 / JOGABILIDADE</span>
+            <h3>Railway Rush</h3>
+            <p>Corrida 3D, câmera de perseguição, pista e leitura instantânea do resultado.</p>
+            <div class="project-foot">
+              <div class="tags"><b>THREE.JS</b><b>GAME</b><b>3D</b></div>
+              <a class="demo-launch" href="./demos/railway-rush.html" target="_blank" rel="noopener">ABRIR ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section code-section">
+      <div class="section-label">06 / CODE-FIRST</div>
+      <div class="code-grid">
+        <div class="code-copy reveal">
+          <p class="eyebrow">IDEIA ENTRA. SOFTWARE SAI.</p>
+          <h2>Um fluxo<br>sem teatro.</h2>
+          <p>LEVUM entra no ciclo real de desenvolvimento: entende contexto, gera estrutura, revê o que fez e segue. O site agora acompanha essa lógica com motion, ritmo e leitura melhores.</p>
+          <div class="capability-table">
+            <div><span>GERAÇÃO</span><strong>projetos + features</strong></div>
+            <div><span>DEBUG</span><strong>análise + correção</strong></div>
+            <div><span>REFATORAÇÃO</span><strong>estrutura + clareza</strong></div>
+            <div><span>PROTOTIPAGEM</span><strong>ideia → executável</strong></div>
+          </div>
+        </div>
+
+        <div class="code-window reveal delay-1" data-tilt>
+          <div class="window-bar"><i></i><i></i><i></i><span>levum.local</span></div>
+          <pre><code><span class="muted">$</span> levum run
+
+<span class="blue">model</span>: LEVUM
+<span class="blue">base</span>: Qwen 3.5 9B
+<span class="blue">modo</span>: local
+<span class="blue">foco</span>: código
+
+<span class="muted">&gt;</span> construir a feature
+
+<span class="green">✓ lendo contexto do projeto</span>
+<span class="green">✓ planejando implementação</span>
+<span class="green">✓ escrevendo código</span>
+<span class="green">✓ verificando estrutura</span>
+
+<span class="accent">PRONTO PARA RODAR.</span><span class="blink">▌</span></code></pre>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="warning-strip" style="margin-bottom:0">
-      <strong>RECOMENDAÇÃO:</strong> structured output não substitui um bom prompt. Continue dizendo explicitamente o que deve ser criado, o formato esperado e, quando possível, use prefill.
-    </div>
+
+    <section class="section quant-section" id="quantizacao">
+      <div class="section-label">07 / QUANTIZAÇÕES</div>
+      <div class="section-top quant-top reveal">
+        <div>
+          <p class="eyebrow">MENOS PESO. MAIS POSSIBILIDADES.</p>
+          <h2>O melhor modelo<br><em>é o que roda.</em></h2>
+        </div>
+        <p>Quantização não é uma competição para ver quem usa mais bits. É encontrar o ponto certo entre memória, velocidade e qualidade para o seu hardware.</p>
+      </div>
+
+      <div class="quant-manifesto reveal">
+        <span class="quant-index">Q1 → Q8</span>
+        <p><strong>Q1 não é perfeito.</strong> Mas também não é lixo. Quando cada gigabyte importa, otimização é tudo. Suba a precisão quando puder. Comprima quando precisar. O LEVUM foi empacotado para os dois mundos.</p>
+        <div class="quant-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+
+      <div class="quant-grid">
+        <article class="quant-tier quant-tier-hero reveal" data-tilt>
+          <div class="quant-tier-head"><span>FIDELIDADE</span><b>01</b></div>
+          <h3>Q8_0</h3>
+          <p>Para quem prefere preservar mais qualidade e tem memória para isso. A versão grande, simples e direta.</p>
+          <div class="quant-chip-row"><span>Q8_0</span><em>SEM IMATRIX</em></div>
+        </article>
+
+        <article class="quant-tier reveal delay-1" data-tilt>
+          <div class="quant-tier-head"><span>EQUILÍBRIO</span><b>02</b></div>
+          <h3>Q4 / IQ4</h3>
+          <p>O território do equilíbrio: compressão forte sem transformar o modelo em uma lembrança distante de si mesmo.</p>
+          <div class="quant-chip-row">
+            <span>Q4_K_M</span><span>Q4_K_S</span><span>IQ4_XS</span><span>IQ4_NL</span><span>Q4_1</span><span>Q4_0</span>
+          </div>
+          <em class="imatrix-badge">IMATRIX</em>
+        </article>
+
+        <article class="quant-tier reveal delay-1" data-tilt>
+          <div class="quant-tier-head"><span>COMPACTO</span><b>03</b></div>
+          <h3>Q3 / IQ3</h3>
+          <p>Quando VRAM e RAM começam a mandar na conversa. Mais compacto, ainda útil, e com várias opções para ajustar o compromisso.</p>
+          <div class="quant-chip-row">
+            <span>Q3_K_L</span><span>Q3_K_M</span><span>Q3_K_S</span><span>IQ3_M</span><span>IQ3_S</span><span>IQ3_XS</span><span>IQ3_XXS</span>
+          </div>
+          <em class="imatrix-badge">IMATRIX</em>
+        </article>
+
+        <article class="quant-tier reveal delay-2" data-tilt>
+          <div class="quant-tier-head"><span>ULTRACOMPACTO</span><b>04</b></div>
+          <h3>Q2 / IQ2</h3>
+          <p>Feito para caber onde versões maiores simplesmente não entram. Menos margem, muito mais liberdade de hardware.</p>
+          <div class="quant-chip-row">
+            <span>Q2_K</span><span>Q2_K_S</span><span>IQ2_M</span><span>IQ2_S</span><span>IQ2_XS</span><span>IQ2_XXS</span><span>Q2_0</span><span>TQ2_0</span>
+          </div>
+          <em class="imatrix-badge">IMATRIX</em>
+        </article>
+
+        <article class="quant-tier quant-tier-wide reveal delay-2" data-tilt>
+          <div class="quant-tier-head"><span>MÍNIMO VIÁVEL. MÁXIMA OUSADIA.</span><b>05</b></div>
+          <h3>IQ1_M</h3>
+          <p>É a opção extrema. Não existe almoço grátis, só engenharia tentando fazer caber nove bilhões de parâmetros em lugares cada vez menores.</p>
+          <div class="quant-chip-row"><span>IQ1_M</span><span>EMBEDDING Q8_0</span><span>OUTPUT Q8_0</span></div>
+          <em class="imatrix-badge">IMATRIX</em>
+        </article>
+      </div>
+
+      <div class="quant-footnote reveal">
+        <span>ESCOLHA PELO SEU HARDWARE</span>
+        <p>Mais bits normalmente preservam mais fidelidade; menos bits reduzem memória e tamanho. A melhor variante depende do seu runtime, contexto e limite de hardware.</p>
+      </div>
+    </section>
+
+    <section class="section roadmap release-section" id="download">
+      <div class="section-label">08 / RELEASE</div>
+      <div class="section-top reveal">
+        <div>
+          <p class="eyebrow">LOCAL · DISPONÍVEL · FEITO NO BRASIL</p>
+          <h2>Baixe.<br><em>Rode local.</em></h2>
+        </div>
+        <p>O essencial em uma tela: modelo, base, foco e link. O resto fica no software — não em seis blocos repetindo a mesma informação.</p>
+      </div>
+
+      <div class="release-grid">
+        <div class="release-card release-primary reveal" data-tilt>
+          <span class="release-kicker">MODELO</span>
+          <h3>LEVUM</h3>
+          <p>Modelo local baseado em Qwen 3.5 9B, pensado para desenvolvimento de software.</p>
+          <a class="button button-primary" href="https://huggingface.co/guell00/LEVUM" target="_blank" rel="noreferrer">ABRIR NO HUGGING FACE ↗</a>
+        </div>
+        <div class="release-card reveal delay-1" data-tilt>
+          <span class="release-kicker">ESPECIFICAÇÕES</span>
+          <table class="spec-table">
+            <tr><th>Modelo base</th><td><code>Qwen 3.5 9B</code></td></tr>
+            <tr><th>Parâmetros</th><td>9B</td></tr>
+            <tr><th>Foco</th><td>Código / software</td></tr>
+            <tr><th>Uso</th><td>Local por padrão</td></tr>
+            <tr><th>Origem</th><td>Feito no Brasil</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
   </div>
 
-<div class="inference-card reveal" style="margin-top:22px">
-    <h3>Prompts usados nos exemplos</h3>
-    <p style="color:#8fa6ba;font-size:12px;line-height:1.7;margin:0 0 18px">Os exemplos abaixo seguem prompts usados nos projetos locais demonstrados na landing. A lista completa também vai dentro do pacote.</p>
-
-    <div class="prompt-library">
-      <details>
-  <summary>Flappy Bird</summary>
-  <div class="prompt-body"><code>Crie um jogo Flappy Bird completo e responsivo em um único arquivo HTML. Retorne somente o HTML completo.</code></div>
-</details>
-<details>
-  <summary>Bonsai Voxel</summary>
-  <div class="prompt-body"><code>Crie uma experiência 3D interativa de um bonsai voxel em um único HTML. Retorne somente o HTML completo.</code></div>
-</details>
-<details>
-  <summary>Railway Rush</summary>
-  <div class="prompt-body"><code>Crie um joguinho 3D de carro em uma corrida ao lado de uma ferrovia. Retorne somente o HTML completo.</code></div>
-</details>
-<details>
-  <summary>Cyber Highway 1984</summary>
-  <div class="prompt-body"><code>Crie um jogo 3D de carro em uma rodovia cyberpunk retrô em um único HTML. Retorne somente o HTML completo.</code></div>
-</details>
-<details>
-  <summary>Doom Three.js</summary>
-  <div class="prompt-body"><code>Crie um jogo de tiro 3D inspirado em Doom usando Three.js em um único HTML. Retorne somente o HTML completo.</code></div>
-</details>
-<details>
-  <summary>Sistema Solar 3D</summary>
-  <div class="prompt-body"><code>Crie um sistema solar 3D interativo em um único HTML. Retorne somente o HTML completo.</code></div>
-</details>
-<details>
-  <summary>Semáforo do Caos</summary>
-  <div class="prompt-body"><code>Crie um jogo 3D chamado Semáforo do Caos em um único HTML. Retorne apenas o HTML.</code></div>
-</details>
-<details>
-  <summary>Deploy na Sexta às 18h</summary>
-  <div class="prompt-body"><code>Crie um jogo 3D chamado Deploy na Sexta às 18h em um único HTML. Retorne apenas o HTML.</code></div>
-</details>
+  <section class="final-cta">
+    <div class="final-bg" aria-hidden="true"></div>
+    <div class="final-copy reveal">
+      <span class="eyebrow" id="final-eyebrow">LEVUM / BRASIL</span>
+      <h2 id="final-title">Inteligência<br>que fica por perto.</h2>
+      <p id="final-description">Baixe. Rode localmente. Aponte para o código.</p>
+      <div class="final-actions">
+        <a class="button button-primary" href="https://huggingface.co/guell00/LEVUM" target="_blank" rel="noreferrer">HUGGING FACE <span>↗</span></a>
+        <a class="text-link" href="#top">VOLTAR AO TOPO <span>↑</span></a>
+      </div>
     </div>
-
-    <div class="prompt-actions">
-      <a href="./docs/prompts-dos-joguinhos.md" target="_blank" rel="noopener">ABRIR LISTA COMPLETA DE PROMPTS ↗</a>
-    </div>
-  </div>
-</section>
-
-<section class="section roadmap release-section" id="download">
-  <div class="section-label" data-i18n="sec_release">07 / RELEASE</div>
-  <div class="roadmap-head reveal">
-    <p class="eyebrow" data-i18n="release_eyebrow">AVAILABLE NOW · QUANTIZED · HUGGING FACE</p>
-    <h2 data-i18n="release_title">Já está<br/>disponível.</h2>
-  </div>
-
-  <div class="release-grid">
-    <div class="release-card reveal">
-      <span class="release-kicker" data-i18n="release_model_label">MODELO</span>
-      <h3>VELUM-Coder</h3>
-      <p data-i18n="release_model_p">Baixe as versões quantizadas diretamente no Hugging Face e rode localmente no seu próprio stack.</p>
-      <a class="button button-primary" href="https://huggingface.co/guell00/VELUM-Coder" target="_blank" rel="noreferrer" data-i18n="hf_cta">ABRIR NO HUGGING FACE ↗</a>
-    </div>
-
-    <div class="release-card reveal delay-1">
-      <span class="release-kicker" data-i18n="release_stack_label">STACK</span>
-      <table class="spec-table">
-        <tr><th data-i18n="spec_base">Base model</th><td><code>unsloth/LFM2.5-8B-A1B</code></td></tr>
-        <tr><th data-i18n="spec_draft">Draft model</th><td><code>LFM2.5-230M</code></td></tr>
-        <tr><th data-i18n="spec_params">Parâmetros</th><td>8B total · ~1B active</td></tr>
-        <tr><th data-i18n="spec_training">Post-training</th><td>95% code · 5% language</td></tr>
-        <tr><th data-i18n="spec_use">Uso</th><td data-i18n="spec_use_value">Código / desenvolvimento de software</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="benchmark-note reveal">
-    <div>
-      <span data-i18n="bench_label">SOBRE BENCHMARKS</span>
-      <h3 data-i18n="bench_title">Ainda não tem uma tabela bonita de números. De propósito.</h3>
-    </div>
-    <p data-i18n="bench_p">O orçamento de compute foi priorizado no treinamento e post-training na H100. Ainda não rodei uma bateria padronizada completa como HumanEval/MBPP com metodologia reproduzível. Em vez de preencher a página com números parciais, esta release mostra avaliações funcionais e projetos executáveis. Eles demonstram capacidade prática, mas não substituem benchmarks padronizados.</p>
-  </div>
-
-  <div class="release-policy reveal">
-    <span data-i18n="policy_label">O QUE É PUBLICADO</span>
-    <p data-i18n="policy_p">A distribuição pública é do modelo quantizado. Dataset de treinamento, pipeline de treinamento e outros artefatos internos não fazem parte desta release.</p>
-  </div>
-</section>
-
-<section class="final-cta">
-<div aria-hidden="true" class="final-bg"></div>
-<div class="final-copy reveal">
-<span class="eyebrow" data-i18n="final_eyebrow">VELUM / BRAZIL</span>
-<h2 data-i18n="final_title">Inteligência<br/>que fica perto.</h2>
-<p data-i18n="final_p">Baixe. Rode localmente. Aponte para código.</p>
-<div class="final-actions">
-<a class="button button-primary" href="https://huggingface.co/guell00/VELUM-Coder" rel="noreferrer" target="_blank">HUGGING FACE <span>↗</span></a>
-<a class="text-link" data-i18n="back_top" href="#top">VOLTAR AO TOPO <span>↑</span></a>
-</div>
-</div>
-<div class="signature">by guell00 <span>·</span> Miguel Penha Reis</div>
-</section>
+    <div class="signature">by guell00 <span>·</span> Miguel Penha Reis</div>
+  </section>
 </main>
+
 <footer>
-<span>VELUM © 2026</span>
-<span>8B TOTAL · ~1B ACTIVE · 95% CODE POST-TRAINING</span>
-<span data-i18n="footer_place">FEITO NO BRASIL</span>
+  <span>LEVUM © 2026</span>
+  <span>QWEN 3.5 · 9B PARÂMETROS · MODELO LOCAL PARA CÓDIGO</span>
+  <span>FEITO NO BRASIL</span>
 </footer>
 
-<script src="./velum-release-v6.js?v=6"></script>
+<script src="./velum-release-v6.js?v=12"></script>
 </body>
 </html>
